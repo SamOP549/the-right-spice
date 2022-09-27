@@ -2,10 +2,70 @@ import React from 'react'
 import Image from 'next/image'
 import brandLogo from '../public/logo.png'
 import Link from 'next/link'
+import { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/router'
+
 
 const Login = () => {
+  const router = useRouter()
+  const [emailOrNumber, setEmailOrNumber] = useState()
+  const [password, setPassword] = useState()
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = { emailOrNumber, password }
+    let res = await fetch('http://localhost:3000/api/login', {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    })
+    let response = await res.json()
+    console.log(response)
+    setEmailOrNumber('')
+    setPassword('')
+    if (response.success) {
+      toast.success('Your are successfully logged in!✅', {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+      setTimeout(() => {
+        router.push('http://localhost:3000')
+      }, 2000);
+    }
+    else {
+      toast.error(response.error, {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+  }
   return (
     <div className="bg-white">
+      <ToastContainer
+        position="bottom-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="flex justify-center h-screen">
         <div className="hidden bg-cover lg:block lg:w-2/3" style={{ backgroundImage: "url(https://images.unsplash.com/photo-1616763355603-9755a640a287?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80)" }}>
           <div className="flex items-center h-full px-20 bg-gray-900 bg-opacity-40">
@@ -32,19 +92,19 @@ const Login = () => {
             </div>
 
             <div className="mt-8">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div>
-                  <label for="email" className="block mb-2 text-sm text-gray-600">Email Address</label>
-                  <input type="email" name="email" id="email" placeholder="example@example.com" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                  <label htmlFor="emailOrNumber" className="block mb-2 text-sm text-gray-600">Email Address or Number</label>
+                  <input value={emailOrNumber} onChange={(e) => setEmailOrNumber(e.target.value)} type="text" name="emailOrNumber" id="emailOrNumber" placeholder="Email or Number" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
                 </div>
 
                 <div className="mt-6">
                   <div className="flex justify-between mb-2">
-                    <label for="password" className="text-sm text-gray-600">Password</label>
+                    <label htmlFor="password" className="text-sm text-gray-600">Password</label>
                     <Link href='/forgot'><a className="text-sm text-blue-500 hover:underline">Forgot password?</a></Link>
                   </div>
 
-                  <input type="password" name="password" id="password" placeholder="Your Password" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
+                  <input value={password} onChange={(e) => setPassword(e.target.value)} type="password" name="password" id="password" placeholder="Your Password" className="block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
                 </div>
 
                 <div className="mt-6">

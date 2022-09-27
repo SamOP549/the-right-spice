@@ -29,7 +29,6 @@ const Signup = () => {
       return;
     }
     const data = { fname, mname, lname, gender, number, email, password }
-    console.log(data)
     let res = await fetch('http://localhost:3000/api/signup', {
       method: 'POST', // or 'PUT'
       headers: {
