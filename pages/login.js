@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import brandLogo from '../public/logo.png'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState , useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router'
@@ -13,10 +13,17 @@ const Login = () => {
   const [emailOrNumber, setEmailOrNumber] = useState()
   const [password, setPassword] = useState()
 
+  useEffect(() => {
+    if(localStorage.getItem('token')){
+      router.push('/')
+    }
+  }, [])
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = { emailOrNumber, password }
-    let res = await fetch('http://localhost:3000/api/login', {
+    let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/login`, {
       method: 'POST', // or 'PUT'
       headers: {
         'Content-Type': 'application/json',
@@ -28,7 +35,8 @@ const Login = () => {
     setEmailOrNumber('')
     setPassword('')
     if (response.success) {
-      toast.success('Your are successfully logged in!✅', {
+      localStorage.setItem("token", response.token)
+      toast.success('Your are successfully logged in!', {
         position: "bottom-center",
         autoClose: 2000,
         hideProgressBar: false,
@@ -38,7 +46,7 @@ const Login = () => {
         progress: undefined,
       });
       setTimeout(() => {
-        router.push('http://localhost:3000')
+        router.push('/')
       }, 2000);
     }
     else {

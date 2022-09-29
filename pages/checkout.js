@@ -1,8 +1,38 @@
 import React from 'react'
+import Head from 'next/head'
+import Script from 'next/script'
+import { useState } from 'react'
 
 const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCount }) => {
+  const [fname, setFname] = useState('')
+  const [lname, setLname] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [pinCode, setPinCode] = useState('')
+  const [address, setAddress] = useState('')
+  const [locality, setLocality] = useState('')
+  const [city, setCity] = useState('')
+  const [state, setState] = useState('')
+  const handleChange = async (e) => {
+    setPinCode(e.target.value)
+    if (e.target.value.length == 6) {
+      let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
+      let pinJson = await pins.json()
+      if (Object.keys(pinJson).includes(e.target.value)) {
+        setCity(pinJson[e.target.value][0])
+        setState(pinJson[e.target.value][1])
+      }
+    }
+    else{
+      setState('')
+      setCity('')
+    }
+  }
   return (
     <section>
+      <Head>
+        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
+      </Head>
       <h1 className="sr-only">Checkout</h1>
 
       <div className="relative mx-auto max-w-screen-2xl">
@@ -78,6 +108,8 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                     className="rounded-lg shadow-sm border-2 border-gray-200 w-full text-sm p-2.5"
                     type="text"
                     id="frst_name"
+                    value={fname}
+                    onChange={(e) => setFname(e.target.value)}
                   />
                 </div>
 
@@ -90,6 +122,8 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                     className="rounded-lg shadow-sm border-2 border-gray-200 w-full text-sm p-2.5"
                     type="text"
                     id="last_name"
+                    value={lname}
+                    onChange={(e) => setLname(e.target.value)}
                   />
                 </div>
 
@@ -102,6 +136,8 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                     className="rounded-lg shadow-sm border-2 border-gray-200 w-full text-sm p-2.5"
                     type="email"
                     id="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                 </div>
 
@@ -114,6 +150,8 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                     className="rounded-lg shadow-sm border-2 border-gray-200 w-full text-sm p-2.5"
                     type="tel"
                     id="phone"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
                   />
                 </div>
 
@@ -128,6 +166,8 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                       type="number"
                       id="pincode"
                       placeholder='Pin Code'
+                      value={pinCode}
+                      onChange={handleChange}
                     />
                   </div>
 
@@ -138,6 +178,8 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                       type="text"
                       id="address"
                       placeholder='Address(House No, Building, Street, Area)'
+                      value={address}
+                      onChange={(e) => setAddress(e.target.value)}
                     />
                   </div>
 
@@ -148,6 +190,8 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                       type="text"
                       id="town"
                       placeholder='Locality/Town'
+                      value={locality}
+                      onChange={(e) => setLocality(e.target.value)}
                     />
                   </div>
 
@@ -158,7 +202,9 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                       type="text"
                       id="city"
                       placeholder='City/District'
-                      disabled
+                      readOnly='true'
+                      value={city}
+                      onChange={handleChange}
                     />
                   </div>
                   <div className="col-span-3">
@@ -168,7 +214,9 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                       type="text"
                       id="state"
                       placeholder='State'
-                      disabled
+                      readOnly='true'
+                      value={state}
+                      onChange={handleChange}
                     />
                   </div>
                 </fieldset>

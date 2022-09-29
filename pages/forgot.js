@@ -1,7 +1,15 @@
 import React from 'react'
 import Link from 'next/link'
+import { useEffect } from 'react'
+import { useRouter } from 'next/router';
 
 const Forgot = () => {
+    const router = useRouter()
+    useEffect(() => {
+        if(localStorage.getItem('token')){
+          router.push('/')
+        }
+      }, [])
     return (
         <section className="bg-white">
             <div className="flex justify-center min-h-screen">

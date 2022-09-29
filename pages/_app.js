@@ -6,13 +6,24 @@ import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import LoadingBar from 'react-top-loading-bar'
+import Script from 'next/script'
 
 function MyApp({ Component, pageProps }) {
+  const [progress, setProgress] = useState(0)
   const [cart, setCart] = useState({})
   const [subTotal, setSubTotal] = useState(0)
   const [itemCount, setItemCount] = useState(0)
+  const [user, setUser] = useState({ value: null })
+  const [key, setKey] = useState(0)
   const router = useRouter();
-  useEffect((cart) => {
+  useEffect(() => {
+    router.events.on('routeChangeStart', () => {
+      setProgress(40)
+    })
+    router.events.on('routeChangeComplete', () => {
+      setProgress(100)
+    })
     console.log("Hey I am a useEffect from _app.js")
     try {
       if (localStorage.getItem("cart")) {
@@ -23,7 +34,12 @@ function MyApp({ Component, pageProps }) {
       console.error(error);
       localStorage.clear()
     }
-  }, [])
+    const token = localStorage.getItem("token")
+    if (token) {
+      setUser({ value: token })
+      setKey(Math.random())
+    }
+  }, [router.query])
 
   const saveCart = (myCart) => {
     localStorage.setItem("cart", JSON.stringify(myCart))
@@ -71,6 +87,13 @@ function MyApp({ Component, pageProps }) {
     router.push('/checkout')
   }
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    setKey(Math.random())
+    setUser({ value: null })
+    router.push('/')
+  }
+
   const removeFromCart = (itemCode, qty, price, name, size, imageSrc, imageAlt, href) => {
     toast.info('Item removed from cart!😢', {
       position: "bottom-center",
@@ -111,7 +134,14 @@ function MyApp({ Component, pageProps }) {
   }
   return (
     <div>
-      <Navbar cart={cart} itemCount={itemCount} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
+      <LoadingBar
+        color='#DAA520'
+        waitingTime={400}
+        height={3}
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
+      <Navbar logout={logout} user={user} key={key} cart={cart} itemCount={itemCount} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
       <Component buyNow={buyNow} cart={cart} itemCount={itemCount} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
       <Footer />
     </div>

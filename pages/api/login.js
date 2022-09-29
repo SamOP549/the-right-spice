@@ -4,13 +4,15 @@ import connectDb from "../../middleware/mongoose"
 import User from "../../models/User"
 
 var CryptoJS = require("crypto-js");
+var jwt = require('jsonwebtoken');
 
 const handler = async (req, res) => {
     if (req.method == 'POST') {
         let user = await User.findOne({ $or: [{ email: req.body.emailOrNumber }, { number: req.body.emailOrNumber }] })
         if (user) {
             if ((req.body.emailOrNumber == user.email || req.body.emailOrNumber == user.number) && req.body.password == CryptoJS.AES.decrypt(user.password, 'therightspice').toString(CryptoJS.enc.Utf8)) {
-                res.status(200).json({ success: true, email: user.email, fname: user.fname })
+                var token = jwt.sign({ email: user.email, fname: user.fname }, 'jwtsecret', { expiresIn: '2d' });
+                res.status(200).json({ success: true, token })
             }
             else {
                 res.status(200).json({ success: false, error: "Invalid credentials!" })
