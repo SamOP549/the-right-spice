@@ -2,6 +2,7 @@ import React from 'react'
 import Head from 'next/head'
 import Script from 'next/script'
 import { useState } from 'react'
+import Link from 'next/link'
 
 const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCount }) => {
   const [fname, setFname] = useState('')
@@ -13,19 +14,113 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
   const [locality, setLocality] = useState('')
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
+  const [disabled, setDisabled] = useState(true)
+
+  const initializeRazorpay = () => {
+    return new Promise((resolve) => {
+      const script = document.createElement("script");
+      script.src = "https://checkout.razorpay.com/v1/checkout.js";
+
+      script.onload = () => {
+        resolve(true);
+      };
+      script.onerror = () => {
+        resolve(false);
+      };
+
+      document.body.appendChild(script);
+    });
+  };
+
+  const initiatePayment = async (e) => {
+    e.preventDefault();
+
+    const res = await initializeRazorpay();
+
+    if (!res) {
+      alert("Razorpay SDK Failed to load");
+      return;
+    }
+
+    const sendData = { subTotal, cart, email, fname, lname, address, pinCode, phone, locality, city, state };
+
+    const t = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/checkout`, {
+      method: 'POST', // or 'PUT'
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(sendData),
+    })
+    const a = t.json()
+    const data = await a;
+    console.log(data)
+
+    var options = {
+      "key": process.env.RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
+      "name": "The Right Spice",
+      "currency": data.currency,
+      "amount": data.amount,
+      "order_id": data.id,
+      "description": "Thankyou for your purchase",
+      "image": "",
+      "callback_url": `${process.env.NEXT_PUBLIC_HOST}/api/paymentverification`,
+      "redirect": true,
+      "prefill": {
+        "name": "Manu Arora",
+        "email": "manuarorawork@gmail.com",
+        "contact": "9999999999",
+      },
+      "notes": {
+        "address": "Razorpay Corporate Office"
+      },
+      "theme": {
+        "color": "#d20404"
+      }
+    };
+
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
+  }
+
   const handleChange = async (e) => {
-    setPinCode(e.target.value)
-    if (e.target.value.length == 6) {
-      let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
-      let pinJson = await pins.json()
-      if (Object.keys(pinJson).includes(e.target.value)) {
-        setCity(pinJson[e.target.value][0])
-        setState(pinJson[e.target.value][1])
+    if (e.target.name == 'fname') {
+      setFname(e.target.value)
+    }
+    else if (e.target.name == 'lname') {
+      setLname(e.target.value)
+    }
+    else if (e.target.name == 'email') {
+      setEmail(e.target.value)
+    }
+    else if (e.target.name == 'phone') {
+      setPhone(e.target.value)
+    }
+    else if (e.target.name == 'address') {
+      setAddress(e.target.value)
+    }
+    else if (e.target.name == 'locality') {
+      setLocality(e.target.value)
+    }
+    else if (e.target.name == 'pincode') {
+      setPinCode(e.target.value)
+      if (e.target.value.length == 6) {
+        let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
+        let pinJson = await pins.json()
+        if (Object.keys(pinJson).includes(e.target.value)) {
+          setCity(pinJson[e.target.value][0])
+          setState(pinJson[e.target.value][1])
+        }
+      }
+      else {
+        setState('')
+        setCity('')
       }
     }
-    else{
-      setState('')
-      setCity('')
+    if (fname && email && phone && address && locality && pinCode) {
+      setDisabled(false)
+    }
+    else {
+      setDisabled(true)
     }
   }
   return (
@@ -33,6 +128,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
       <Head>
         <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
       </Head>
+
       <h1 className="sr-only">Checkout</h1>
 
       <div className="relative mx-auto max-w-screen-2xl">
@@ -100,7 +196,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
             <div className="max-w-lg px-4 mx-auto lg:px-8">
               <form className="grid grid-cols-6 gap-4">
                 <div className="col-span-3">
-                  <label className="block mb-1 text-sm text-gray-600" for="first_name">
+                  <label className="block mb-1 text-sm text-gray-600" htmlFor="first_name">
                     First Name
                   </label>
 
@@ -109,12 +205,13 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                     type="text"
                     id="frst_name"
                     value={fname}
-                    onChange={(e) => setFname(e.target.value)}
+                    name='fname'
+                    onChange={handleChange}
                   />
                 </div>
 
                 <div className="col-span-3">
-                  <label className="block mb-1 text-sm text-gray-600" for="last_name">
+                  <label className="block mb-1 text-sm text-gray-600" htmlFor="last_name">
                     Last Name
                   </label>
 
@@ -123,12 +220,13 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                     type="text"
                     id="last_name"
                     value={lname}
-                    onChange={(e) => setLname(e.target.value)}
+                    name='lname'
+                    onChange={handleChange}
                   />
                 </div>
 
                 <div className="col-span-6">
-                  <label className="block mb-1 text-sm text-gray-600" for="email">
+                  <label className="block mb-1 text-sm text-gray-600" htmlFor="email">
                     Email
                   </label>
 
@@ -137,12 +235,13 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                     type="email"
                     id="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    name='email'
+                    onChange={handleChange}
                   />
                 </div>
 
                 <div className="col-span-6">
-                  <label className="block mb-1 text-sm text-gray-600" for="phone">
+                  <label className="block mb-1 text-sm text-gray-600" htmlFor="phone">
                     Phone
                   </label>
 
@@ -151,7 +250,8 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                     type="tel"
                     id="phone"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
+                    name='phone'
+                    onChange={handleChange}
                   />
                 </div>
 
@@ -167,6 +267,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                       id="pincode"
                       placeholder='Pin Code'
                       value={pinCode}
+                      name='pincode'
                       onChange={handleChange}
                     />
                   </div>
@@ -179,7 +280,8 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                       id="address"
                       placeholder='Address(House No, Building, Street, Area)'
                       value={address}
-                      onChange={(e) => setAddress(e.target.value)}
+                      name='address'
+                      onChange={handleChange}
                     />
                   </div>
 
@@ -191,7 +293,8 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                       id="town"
                       placeholder='Locality/Town'
                       value={locality}
-                      onChange={(e) => setLocality(e.target.value)}
+                      name='locality'
+                      onChange={handleChange}
                     />
                   </div>
 
@@ -202,8 +305,9 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                       type="text"
                       id="city"
                       placeholder='City/District'
-                      readOnly='true'
+                      readOnly
                       value={city}
+                      name='city'
                       onChange={handleChange}
                     />
                   </div>
@@ -214,20 +318,24 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                       type="text"
                       id="state"
                       placeholder='State'
-                      readOnly='true'
+                      readOnly
                       value={state}
+                      name='state'
                       onChange={handleChange}
                     />
                   </div>
                 </fieldset>
 
                 <div className="col-span-6">
-                  <button
-                    className="rounded-lg bg-black text-sm p-2.5 text-white w-full block"
-                    type="submit"
-                  >
-                    Pay Now
-                  </button>
+                  <Link href='/checkout' >
+                    <button
+                      className="disabled:bg-gray-300 rounded-lg bg-black text-sm p-2.5 text-white w-full block"
+                      onClick={initiatePayment}
+                      disabled={disabled}
+                    >
+                      Pay Now
+                    </button>
+                  </Link>
                 </div>
               </form>
             </div>

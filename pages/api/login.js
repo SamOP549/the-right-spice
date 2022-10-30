@@ -10,8 +10,8 @@ const handler = async (req, res) => {
     if (req.method == 'POST') {
         let user = await User.findOne({ $or: [{ email: req.body.emailOrNumber }, { number: req.body.emailOrNumber }] })
         if (user) {
-            if ((req.body.emailOrNumber == user.email || req.body.emailOrNumber == user.number) && req.body.password == CryptoJS.AES.decrypt(user.password, 'therightspice').toString(CryptoJS.enc.Utf8)) {
-                var token = jwt.sign({ email: user.email, fname: user.fname }, 'jwtsecret', { expiresIn: '2d' });
+            if ((req.body.emailOrNumber == user.email || req.body.emailOrNumber == user.number) && req.body.password == CryptoJS.AES.decrypt(user.password, process.env.AES_SECRET).toString(CryptoJS.enc.Utf8)) {
+                var token = jwt.sign({ email: user.email, fname: user.fname }, process.env.JWT_SECRET, { expiresIn: '2d' });
                 res.status(200).json({ success: true, token })
             }
             else {

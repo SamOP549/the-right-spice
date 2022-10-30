@@ -10,7 +10,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline'
 const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subTotal, itemCount }) => {
     const [open, setOpen] = useState(false)
     return (
-        <div className='sticky top-0 z-10 shadow-lg'>
+        <div className='sticky top-0 z-20 shadow-lg'>
             <div className="navbar bg-white text-black">
                 <div className="navbar-start">
                     <div className="dropdown">
@@ -50,7 +50,7 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                             </div>
                         </label>
                         <Transition.Root show={open} as={Fragment}>
-                            <Dialog as="div" className="relative z-10" onClose={setOpen}>
+                            <Dialog as="div" className="relative z-20" onClose={setOpen}>
                                 <Transition.Child
                                     as={Fragment}
                                     enter="ease-in-out duration-500"

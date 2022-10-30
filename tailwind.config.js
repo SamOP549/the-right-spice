@@ -11,6 +11,6 @@ module.exports = {
   plugins: [
     require("daisyui"),
     require('@tailwindcss/aspect-ratio'),
-    require('tw-elements/dist/plugin'),
+    require('tw-elements/dist/plugin')  
   ],
 }
