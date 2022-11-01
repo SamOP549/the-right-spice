@@ -1,8 +1,10 @@
 import React from 'react'
 import Head from 'next/head'
 import Script from 'next/script'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCount }) => {
   const [fname, setFname] = useState('')
@@ -15,6 +17,27 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
   const [disabled, setDisabled] = useState(true)
+  const [user, setUser] = useState({ value: null })
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem('myuser'))
+    if (user && user.token) {
+      setUser(user)
+      setEmail(user.email)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (fname && email && phone.length >= 3 && address.length >= 3 && locality && pinCode.length >= 3) {
+      setDisabled(false)
+    }
+    else {
+      setDisabled(true)
+    }
+
+  }, [fname, lname, email, phone, pinCode, address, locality])
+
+
 
   const initializeRazorpay = () => {
     return new Promise((resolve) => {
@@ -51,35 +74,49 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
       },
       body: JSON.stringify(sendData),
     })
-    const a = t.json()
-    const data = await a;
+    const data = await t.json()
     console.log(data)
-
-    var options = {
-      "key": process.env.RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
-      "name": "The Right Spice",
-      "currency": data.currency,
-      "amount": data.amount,
-      "order_id": data.id,
-      "description": "Thankyou for your purchase",
-      "image": "",
-      "callback_url": `${process.env.NEXT_PUBLIC_HOST}/api/paymentverification`,
-      "redirect": true,
-      "prefill": {
-        "name": "Manu Arora",
-        "email": "manuarorawork@gmail.com",
-        "contact": "9999999999",
-      },
-      "notes": {
-        "address": "Razorpay Corporate Office"
-      },
-      "theme": {
-        "color": "#d20404"
+    if (data.error) {
+      if (data.cartClear) {
+        clearCart()
       }
-    };
+      toast.error(data.error, {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    else {
+      var options = {
+        "key": process.env.RAZORPAY_KEY, // Enter the Key ID generated from the Dashboard
+        "name": "The Right Spice",
+        "currency": data.currency,
+        "amount": data.amount,
+        "order_id": data.id,
+        "description": "Thankyou for your purchase",
+        "image": "",
+        "callback_url": `${process.env.NEXT_PUBLIC_HOST}/api/paymentverification`,
+        "redirect": true,
+        "prefill": {
+          "name": "Manu Arora",
+          "email": "manuarorawork@gmail.com",
+          "contact": "9999999999",
+        },
+        "notes": {
+          "address": "Razorpay Corporate Office"
+        },
+        "theme": {
+          "color": "#d20404"
+        }
+      };
 
-    const paymentObject = new window.Razorpay(options);
-    paymentObject.open();
+      const paymentObject = new window.Razorpay(options);
+      paymentObject.open();
+    }
   }
 
   const handleChange = async (e) => {
@@ -116,18 +153,20 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
         setCity('')
       }
     }
-    if (fname && email && phone && address && locality && pinCode) {
-      setDisabled(false)
-    }
-    else {
-      setDisabled(true)
-    }
   }
   return (
     <section>
-      <Head>
-        <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0" />
-      </Head>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
 
       <h1 className="sr-only">Checkout</h1>
 
@@ -230,14 +269,26 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
                     Email
                   </label>
 
-                  <input
-                    className="rounded-lg shadow-sm border-2 border-gray-200 w-full text-sm p-2.5"
-                    type="email"
-                    id="email"
-                    value={email}
-                    name='email'
-                    onChange={handleChange}
-                  />
+                  {
+                    user && user.token ?
+                      <input
+                        className="rounded-lg shadow-sm border-2 border-gray-200 w-full text-sm p-2.5"
+                        type="email"
+                        id="email"
+                        value={user.email}
+                        name='email'
+                        readOnly
+                        onChange={handleChange}
+                      /> :
+                      <input
+                        className="rounded-lg shadow-sm border-2 border-gray-200 w-full text-sm p-2.5"
+                        type="email"
+                        id="email"
+                        value={email}
+                        name='email'
+                        onChange={handleChange}
+                      />
+                  }
                 </div>
 
                 <div className="col-span-6">

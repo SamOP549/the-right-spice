@@ -76,6 +76,9 @@ export async function getServerSideProps() {
       if (item.availableQty > 0) {
         combos[item.title].size = [item.size]
       }
+      else {
+        combos[item.title].size = []
+      }
     }
   }
 

@@ -11,7 +11,9 @@ const OrderSchema = new mongoose.Schema({
     state: { type: String, required: true },
     pincode: { type: String, required: true },
     amount: { type: Number, required: true },
+    shippingcharges: { type: Number, required: true, default: 0 },
     status: { type: String, default: 'Initiated', required: true },
+    deliveryStatus: { type: String, default: 'unshipped', required: true },
 }, { timestamps: true })
 
 mongoose.models = {}

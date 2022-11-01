@@ -113,7 +113,7 @@ const Spices = ({ products, addToCart }) => {
                               <RadioGroup value={selectedSize} onChange={(e) => setSelectedSize(e)} className="mt-4">
                                 <RadioGroup.Label className="sr-only"> Choose a size </RadioGroup.Label>
                                 <div className="grid grid-cols-4 gap-4">
-                                  {product.size?.map((item, index) => (
+                                  { product.size && product.size.map((item, index) => (
                                     <RadioGroup.Option
                                       key={index}
                                       value={item}
@@ -251,6 +251,9 @@ export async function getServerSideProps() {
       spices[item.title] = JSON.parse(JSON.stringify(item))
       if (item.availableQty > 0) {
         spices[item.title].size = [item.size]
+      }
+      else{
+        spices[item.title].size = []
       }
     }
   }

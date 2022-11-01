@@ -24,7 +24,6 @@ function MyApp({ Component, pageProps }) {
     router.events.on('routeChangeComplete', () => {
       setProgress(100)
     })
-    console.log("Hey I am a useEffect from _app.js")
     try {
       if (localStorage.getItem("cart")) {
         setCart(JSON.parse(localStorage.getItem("cart")))
@@ -34,9 +33,9 @@ function MyApp({ Component, pageProps }) {
       console.error(error);
       localStorage.clear()
     }
-    const token = localStorage.getItem("token")
-    if (token) {
-      setUser({ value: token })
+    const myuser = JSON.parse(localStorage.getItem("myuser"))
+    if (myuser) {
+      setUser({ value: myuser.token, email: myuser.email })
     }
     setKey(Math.random())
   }, [router.query])
@@ -81,14 +80,15 @@ function MyApp({ Component, pageProps }) {
   }
 
   const buyNow = (itemCode, qty, price, name, size, imageSrc, imageAlt, href) => {
-    let newCart = { itemCode: { itemCode, qty, price, name, size, imageSrc, imageAlt, href } }
+    let newCart = {}
+    newCart[itemCode] = { itemCode, qty, price, name, size, imageSrc, imageAlt, href }
     setCart(newCart)
     saveCart(newCart)
     router.push('/checkout')
   }
 
   const logout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("myuser");
     setKey(Math.random())
     setUser({ value: null })
     router.push('/')

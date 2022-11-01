@@ -1,11 +1,12 @@
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Product from '../../models/Product'
 import mongoose from 'mongoose'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Error from 'next/error';
 
-const Post = ({ buyNow, addToCart, product, variants }) => {
+const Post = ({ buyNow, addToCart, product, variants, error }) => {
   const router = useRouter()
   const { slug } = router.query
   const [pin, setPin] = useState()
@@ -13,6 +14,14 @@ const Post = ({ buyNow, addToCart, product, variants }) => {
   const [service, setService] = useState()
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
+  const [size, setSize] = useState()
+
+  useEffect(() => {
+    if (!error) {
+      setSize(product.size)
+    }
+  }, [router.query])
+
   const checkServiceability = async () => {
     let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`)
     let pinJson = await pins.json()
@@ -42,13 +51,17 @@ const Post = ({ buyNow, addToCart, product, variants }) => {
     }
   }
 
-  const [size, setSize] = useState(product.size)
+
 
   const refreshVariant = (newsize) => {
-    setSize(newsize)
     let url = `${process.env.NEXT_PUBLIC_HOST}/product/${variants[newsize]['slug']}`
-    window.location = url
+    router.push(url)
   }
+
+  if (error == 404) {
+    return <Error statusCode={error} />
+  }
+
   return (
     <div>
       <section className="text-gray-600 body-font overflow-hidden bg-white">
@@ -84,10 +97,10 @@ const Post = ({ buyNow, addToCart, product, variants }) => {
                   <span className="mr-3">Size</span>
                   <div className="relative">
                     <select value={size} onChange={(e) => { refreshVariant(e.target.value) }} className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-200 focus:border-indigo-500 text-base pl-3 pr-10">
-                      {Object.keys(variants).includes('50g') && <option>50g</option>}
-                      {Object.keys(variants).includes('100g') && <option>100g</option>}
-                      {Object.keys(variants).includes('150g') && <option>150g</option>}
-                      {Object.keys(variants).includes('200g') && <option>200g</option>}
+                      {size && Object.keys(variants).includes('50g') && <option>50g</option>}
+                      {size && Object.keys(variants).includes('100g') && <option>100g</option>}
+                      {size && Object.keys(variants).includes('150g') && <option>150g</option>}
+                      {size && Object.keys(variants).includes('200g') && <option>200g</option>}
                     </select>
                     <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                       <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" className="w-4 h-4" viewBox="0 0 24 24">
@@ -98,30 +111,33 @@ const Post = ({ buyNow, addToCart, product, variants }) => {
                 </div>
               </div>
               <div className="flex items-center justify-between">
-                <span className="title-font font-medium text-2xl text-gray-900">₹{product.price}</span>
-                <div className='flex'>
-                  <svg xmlns="http://www.w3.org/2000/svg"
-                    onClick={() => {
-                      if (quantity <= 1) {
-                        setQuantity((prevValue) => prevValue - 1)
-                      }
-                    }}
-                    fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer hover:fill-black hover:text-white focus:scale-125">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                  <p className="text-gray-500 mx-1">{quantity}</p>
-                  <svg xmlns="http://www.w3.org/2000/svg"
-                    onClick={() => {
-                      setQuantity((prevValue) => prevValue + 1)
-                    }}
-                    fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer hover:fill-black hover:text-white focus:scale-125">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
-                </div>
-                <button onClick={() => { addToCart(slug, quantity, product.price, product.title, product.size, product.img, "spice", `/product/${slug}`) }} className="flex items-center justify-around gap-x-2 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Add To Cart
+                <span className="title-font font-medium text-2xl text-gray-900">{product.availableQty <= 0 ? "Out of Stock!" : "₹" + product.price}</span>
+                {
+                  product.availableQty > 0 &&
+                  <div className='flex'>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                      onClick={() => {
+                        if (quantity <= 1) {
+                          setQuantity((prevValue) => prevValue - 1)
+                        }
+                      }}
+                      fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer hover:fill-black hover:text-white focus:scale-125">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <p className="text-gray-500 mx-1">{quantity}</p>
+                    <svg xmlns="http://www.w3.org/2000/svg"
+                      onClick={() => {
+                        setQuantity((prevValue) => prevValue + 1)
+                      }}
+                      fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer hover:fill-black hover:text-white focus:scale-125">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                }
+                <button disabled={product.availableQty <= 0} onClick={() => { addToCart(slug, quantity, product.price, product.title, product.size, product.img, "spice", `/product/${slug}`) }} className="disabled:bg-blue-400 flex items-center justify-around gap-x-2 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Add To Cart
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
                 </button>
-                <button onClick={() => { buyNow(slug, quantity, product.price, product.title, product.size, product.img, "spice", `/product/${slug}`) }} className="flex items-center justify-around gap-x-2 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Buy Now</button>
+                <button disabled={product.availableQty <= 0} onClick={() => { buyNow(slug, quantity, product.price, product.title, product.size, product.img, "spice", `/product/${slug}`) }} className="disabled:bg-blue-400 flex items-center justify-around gap-x-2 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Buy Now</button>
               </div>
               <div className='pin mt-6 flex space-x-2'>
                 <input className='px-2 border-2 border-black rounded-md' type='number' name='pin' onChange={(e) => setPin(e.target.value)} placeholder='Enter your Pincode' />
@@ -205,11 +221,14 @@ const Post = ({ buyNow, addToCart, product, variants }) => {
 }
 
 export async function getServerSideProps(context) {
-  // Fetch data from external API
+  let error = null
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI)
   }
   let product = await Product.findOne({ slug: context.query.slug })
+  if (product == null) {
+    return { props: { error: 404 } }
+  }
   let variants = await Product.find({ title: product.title, category: product.category })
   let sizeSlug = {}
   for (let item of variants) {
@@ -222,7 +241,7 @@ export async function getServerSideProps(context) {
     }
   }
 
-  return { props: { product: JSON.parse(JSON.stringify(product)), variants: JSON.parse(JSON.stringify(sizeSlug)) } }
+  return { props: { error: error, product: JSON.parse(JSON.stringify(product)), variants: JSON.parse(JSON.stringify(sizeSlug)) } }
 }
 
 export default Post

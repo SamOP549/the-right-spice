@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import brandLogo from '../public/logo.png'
 import Link from 'next/link'
-import { useState , useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router'
@@ -14,11 +14,11 @@ const Login = () => {
   const [password, setPassword] = useState()
 
   useEffect(() => {
-    if(localStorage.getItem('token')){
+    if (localStorage.getItem('myuser')) {
       router.push('/')
     }
   }, [])
-  
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ const Login = () => {
     setEmailOrNumber('')
     setPassword('')
     if (response.success) {
-      localStorage.setItem("token", response.token)
+      localStorage.setItem("myuser", JSON.stringify({ token: response.token, email: response.email }))
       toast.success('Your are successfully logged in!', {
         position: "bottom-center",
         autoClose: 2000,
