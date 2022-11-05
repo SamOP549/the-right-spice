@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { useState , useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRouter } from 'next/router';
@@ -8,16 +8,16 @@ import { useRouter } from 'next/router';
 const Signup = () => {
   const router = useRouter()
   const [fname, setFname] = useState()
-  const [mname, setMname] = useState()
   const [lname, setLname] = useState()
   const [gender, setGender] = useState()
   const [number, setNumber] = useState()
   const [email, setEmail] = useState()
+  const [birthday, setBirthday] = useState()
   const [password, setPassword] = useState()
   const [confirmPassword, setConfirmPassword] = useState()
 
   useEffect(() => {
-    if(localStorage.getItem('token')){
+    if (localStorage.getItem('myuser')) {
       router.push('/')
     }
   }, [])
@@ -36,7 +36,7 @@ const Signup = () => {
       });
       return;
     }
-    const data = { fname, mname, lname, gender, number, email, password }
+    const data = { fname, birthday, lname, gender, number, email, password }
     let res = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/signup`, {
       method: 'POST', // or 'PUT'
       headers: {
@@ -47,7 +47,7 @@ const Signup = () => {
     let response = await res.json()
     console.log(response)
     setFname('')
-    setMname('')
+    setBirthday('')
     setLname('')
     setGender('')
     setNumber('')
@@ -98,10 +98,6 @@ const Signup = () => {
                 <input id='firstName' name='firstName' value={fname} onChange={(e) => setFname(e.target.value)} type="text" placeholder="John" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
               </div>
 
-              <div>
-                <label htmlFor='middleName' className="block mb-2 text-sm text-gray-600">Middle Name</label>
-                <input id='middleName' name='middleName' value={mname} onChange={(e) => setMname(e.target.value)} type="text" placeholder="Latskey" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
-              </div>
 
               <div>
                 <label htmlFor='lastName' className="block mb-2 text-sm text-gray-600">Last name</label>
@@ -116,6 +112,11 @@ const Signup = () => {
                   <option className="block mb-2 text-sm text-gray-700">Female</option>
                   <option className="block mb-2 text-sm text-gray-700">Other</option>
                 </select>
+              </div>
+
+              <div>
+                <label htmlFor='birthday' className="block mb-2 text-sm text-gray-600">Birthday (dd/mm/yyyy)</label>
+                <input id='birthday' name='birthday' value={birthday} onChange={(e) => setBirthday(e.target.value)} type="text" placeholder="20/10/2003" className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md focus:border-blue-400 focus:ring-blue-400 focus:outline-none focus:ring focus:ring-opacity-40" />
               </div>
 
               <div>

@@ -200,7 +200,7 @@ const Spices = ({ products, addToCart }) => {
               return (
                   <a href="#" className="block shadow-2xl rounded-lg p-3" key={products[item]._id} onMouseOver={() => handleHover(products[item]._id, products[item])}>
                     <div className='relative'>
-                      {hover && (current == products[item]._id) && <button type="button" onClick={() => setOpen(true)} class="inline-block px-6 py-2 border-2 border-gray-400 text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out absolute bottom-0 w-full">Quick View</button>}
+                      {hover && (current == products[item]._id) && <button type="button" onClick={() => setOpen(true)} className="inline-block px-6 py-2 border-2 border-gray-400 text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out absolute bottom-0 w-full">Quick View</button>}
                       <Link passHref={true} href={`/product/${products[item].slug}`} key={products[item]._id}>
                       <img
                         alt="Simple Watch"

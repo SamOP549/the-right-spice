@@ -1,6 +1,5 @@
 import React from 'react'
 import Image from 'next/image'
-import dp from '../public/favicon.ico'
 import Link from 'next/link'
 import logo from '../public/logo.png'
 import { Fragment, useState, useEffect } from 'react'
@@ -21,7 +20,7 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
     }, [])
 
     return (
-        <div className='sticky top-0 z-20 shadow-lg'>
+        <div className='sticky top-0 z-10 shadow-lg'>
             <div className="navbar bg-white text-black">
                 <div className="navbar-start">
                     <div className="dropdown">

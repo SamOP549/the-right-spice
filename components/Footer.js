@@ -6,7 +6,7 @@ import Link from 'next/link'
 const Footer = () => {
   return (
     <div>
-      <footer className="footer p-10 bg-red-800 text-black relative mt-16 items-center">
+      <footer className="footer p-10 bg-red-800 text-black relative items-center">
         <div>
           <div>
             <Image src={logo} alt='logo' height={109 * 1} width={150 * 1} />

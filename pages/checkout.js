@@ -1,6 +1,4 @@
 import React from 'react'
-import Head from 'next/head'
-import Script from 'next/script'
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { ToastContainer, toast } from 'react-toastify';

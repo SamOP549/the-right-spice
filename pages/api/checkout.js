@@ -1,4 +1,3 @@
-import { response } from "express";
 import connectDb from "../../middleware/mongoose"
 import Order from "../../models/Order"
 import Product from "../../models/Product"
@@ -75,8 +74,11 @@ const handler = async (req, res) => {
             //Create a new order
             const response = await razorpay.orders.create(options);
             let order = new Order({
+                fname: req.body.fname,
+                lname: req.body.lname,
                 email: req.body.email,
                 orderId: response.id,
+                number: req.body.phone,
                 address: req.body.address,
                 locality: req.body.locality,
                 city: req.body.city,
