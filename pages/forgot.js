@@ -28,10 +28,26 @@ const Forgot = () => {
         })
         const res = await t.json()
         if (res.success) {
-            console.log('Password reset email sent!')
+            toast.success('Password Reset email sent!', {
+                position: "bottom-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         }
         else {
-            console.log('Error!')
+            toast.error('Error!', {
+                position: "bottom-center",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+            });
         }
     }
 
@@ -49,7 +65,7 @@ const Forgot = () => {
             });
         }
         else {
-            let data = { email, sendMail: false }
+            let data = { token: router.query.token, sendMail: false, newpass }
             const t = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/forgot`, {
                 method: 'POST', // or 'PUT'
                 headers: {
@@ -58,6 +74,17 @@ const Forgot = () => {
                 body: JSON.stringify(data),
             })
             const res = await t.json()
+            if (res.success) {
+                toast.success('Password changed Successfully!', {
+                    position: "bottom-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                });
+            }
         }
     }
 
