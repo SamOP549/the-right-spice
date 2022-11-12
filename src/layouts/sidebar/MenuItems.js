@@ -2,7 +2,7 @@ const Menuitems = [
   {
     title: "Dashbaord",
     icon: "home",
-    href: "/",
+    href: "/admin",
   },
   {
     title: "Add Product",

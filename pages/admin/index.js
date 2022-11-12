@@ -2,7 +2,7 @@ import { Grid } from "@mui/material";
 import BlogCard from "../../src/components/dashboard/BlogCard";
 import SalesOverview from "../../src/components/dashboard/SalesOverview";
 import DailyActivity from "../../src/components/dashboard/DailyActivity";
-import ProductPerfomance from "../../src/components/dashboard/ProductPerfomance";
+import AllProducts from "../../src/components/dashboard/AllProducts";
 import { ThemeProvider } from "@mui/material";
 import theme from "../../src/theme/theme";
 import FullLayout from "../../src/layouts/FullLayout";
@@ -25,7 +25,7 @@ export default function Index() {
                         <DailyActivity />
                     </Grid>
                     <Grid item xs={12} lg={8}>
-                        <ProductPerfomance />
+                        <AllProducts />
                     </Grid>
                     <Grid item xs={12} lg={12}>
                         <BlogCard />

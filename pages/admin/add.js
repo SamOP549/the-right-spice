@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { ThemeProvider } from "@mui/material";
 import theme from "../../src/theme/theme";
 import FullLayout from "../../src/layouts/FullLayout";
@@ -18,9 +18,29 @@ import {
 import BaseCard from "../../src/components/baseCard/BaseCard";
 
 const Add = () => {
+    const [form, setForm] = useState({})
+    const handleChange = (e) => {
+        e.preventDefault()
+        setForm({ ...form, [e.target.name]: e.target.value })
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        const sendData = { form };
+
+        const t = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addproducts`, {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(sendData),
+        })
+        const data = await t.json()
+        console.log(data)
+    }
     return (
         <ThemeProvider theme={theme}>
-        <style jsx global>{`
+            <style jsx global>{`
             .footer{
                 display: none;
             }
@@ -31,90 +51,49 @@ const Add = () => {
                         <BaseCard title="Add a Product">
                             <Stack spacing={3}>
                                 <TextField
-                                    id="name-basic"
-                                    label="Name"
+                                    name="title"
+                                    label="Title"
                                     variant="outlined"
-                                    defaultValue="Nirav Joshi"
+                                    onChange={handleChange}
+                                    value={form.title ? form.title : ""}
                                 />
-                                <TextField id="email-basic" label="Email" variant="outlined" />
-                                <TextField
-                                    id="pass-basic"
-                                    label="Password"
-                                    type="password"
-                                    variant="outlined"
-                                />
-                                <TextField
-                                    id="outlined-multiline-static"
-                                    label="Text Area"
-                                    multiline
-                                    rows={4}
-                                    defaultValue="Default Value"
-                                />
-                                <TextField
-                                    error
-                                    id="er-basic"
-                                    label="Error"
-                                    defaultValue="ad1avi"
-                                    variant="outlined"
-                                />
-                                <FormGroup>
-                                    <FormControlLabel
-                                        control={<Checkbox defaultChecked />}
-                                        label="Terms & Condition"
-                                    />
-                                    <FormControlLabel
-                                        disabled
-                                        control={<Checkbox />}
-                                        label="Disabled"
-                                    />
-                                </FormGroup>
+                                <TextField onChange={handleChange} value={form.slug ? form.slug : ""} name="slug" label="Slug" variant="outlined" />
+                                <TextField onChange={handleChange} value={form.size ? form.size : ""} name="size" label="Size" variant="outlined" />
+                                <TextField onChange={handleChange} value={form.price ? form.price : ""} name="price" label="Price" variant="outlined" />
+                                <TextField onChange={handleChange} value={form.availableQty ? form.availableQty : ""} name="availableQty" label="Available Quantity" variant="outlined" />
                                 <FormControl>
-                                    <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+                                    <FormLabel id="demo-radio-buttons-group-label" name="category">Category</FormLabel>
                                     <RadioGroup
                                         aria-labelledby="demo-radio-buttons-group-label"
-                                        defaultValue="female"
-                                        name="radio-buttons-group"
+                                        name="category"
+                                        value={form.category ? form.category : ""}
+                                        onChange={handleChange}
                                     >
                                         <FormControlLabel
-                                            value="female"
+                                            value="spices"
                                             control={<Radio />}
-                                            label="Female"
+                                            label="Spices"
                                         />
                                         <FormControlLabel
-                                            value="male"
+                                            value="combos"
                                             control={<Radio />}
-                                            label="Male"
-                                        />
-                                        <FormControlLabel
-                                            value="other"
-                                            control={<Radio />}
-                                            label="Other"
+                                            label="Combos"
                                         />
                                     </RadioGroup>
                                 </FormControl>
+                                <TextField
+                                    name="desc"
+                                    label="Description"
+                                    value={form.desc ? form.desc : ""}
+                                    multiline
+                                    rows={4}
+                                    onChange={handleChange}
+                                />
                             </Stack>
                             <br />
-                            <Button variant="contained" mt={2}>
+                            <Button variant="outlined" mt={2} onClick={handleSubmit}>
                                 Submit
                             </Button>
-                        </BaseCard>
-                    </Grid>
-
-                    <Grid item xs={12} lg={12}>
-                        <BaseCard title="Form Design Type">
-                            <Stack spacing={3} direction="row">
-                                <TextField
-                                    id="outlined-basic"
-                                    label="Outlined"
-                                    variant="outlined"
-                                />
-                                <TextField id="filled-basic" label="Filled" variant="filled" />
-                                <TextField
-                                    id="standard-basic"
-                                    label="Standard"
-                                    variant="standard"
-                                />
-                            </Stack>
                         </BaseCard>
                     </Grid>
                 </Grid>
