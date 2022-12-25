@@ -60,7 +60,7 @@ const Footer = () => {
           <span className="footer-title">Links</span>
           <Link href='/spices'><a className="link link-hover">Spices</a></Link>
           <Link href='/combos'><a className="link link-hover">Combos</a></Link>
-          <Link href='/recipes'><a className="link link-hover">Recipes</a></Link>
+          <Link href='/blogs'><a className="link link-hover">Blogs</a></Link>
           <Link href='/contact'><a className="link link-hover">Contact</a></Link>
         </div>
         <div>

@@ -32,7 +32,7 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                             <Link href="/about"><li><a>About</a></li></Link>
                             <Link href="/spices"><li><a>Spices</a></li></Link>
                             <Link href="/combos"><li><a>Combos</a></li></Link>
-                            <Link href="/recipes"><li><a>Recipes</a></li></Link>
+                            <Link href="/blogs"><li><a>Blogs</a></li></Link>
                             <Link href="/contact"><li><a>Contact</a></li></Link>
                         </ul>
                     </div>
@@ -44,7 +44,7 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                         <Link href="/about"><li><a>About</a></li></Link>
                         <Link href="/spices"><li><a>Spices</a></li></Link>
                         <Link href="/combos"><li><a>Combos</a></li></Link>
-                        <Link href="/recipes"><li><a>Recipes</a></li></Link>
+                        <Link href="/blogs"><li><a>Blogs</a></li></Link>
                         <Link href="/contact"><li><a>Contact</a></li></Link>
                     </ul>
                 </div>

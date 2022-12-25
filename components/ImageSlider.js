@@ -1,70 +1,29 @@
-import React, { useState, useEffect } from 'react';
-import { FaArrowAltCircleRight, FaArrowAltCircleLeft } from 'react-icons/fa';
+import React from 'react';
+import Carousel from 'react-material-ui-carousel'
 
-const ImageSlider = () => {
-    const SliderData = [
-        {
-            image:
-                'https://images.unsplash.com/photo-1546768292-fb12f6c92568?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80'
-        },
-        {
-            image:
-                'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
-        },
-        {
-            image:
-                'https://images.unsplash.com/photo-1475189778702-5ec9941484ae?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1351&q=80'
-        },
-        {
-            image:
-                'https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1350&q=80'
-        }
-    ];
-    const [current, setCurrent] = useState(0);
-    const length = SliderData.length;
-
-
-    const nextSlide = (index) => {
-        setCurrent(index == length - 1 ? 0 : index + 1);
-    };
-
-    const prevSlide = (index) => {
-        setCurrent(index == 0 ? length - 1 : index - 1);
-    };
-
-    const gotoSlide = (index) => {
-        setCurrent(index)
-    }
-
-    if (!Array.isArray(SliderData) || SliderData.length <= 0) {
-        return null;
-    }
+export default function Example(props) {
+    var items = [
+        "https://images.unsplash.com/photo-1516655855035-d5215bcb5604?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=60",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=60",
+        "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=60",
+        "https://images.unsplash.com/photo-1458668383970-8ddd3927deed?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=60",
+        "https://images.unsplash.com/photo-1516655855035-d5215bcb5604?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=60",
+        "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=60",
+        "https://images.unsplash.com/photo-1519681393784-d120267933ba?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=60",
+        "https://images.unsplash.com/photo-1458668383970-8ddd3927deed?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1200&q=60"
+    ]
 
     return (
-        <section className='relative h-full flex justify-center items-center'>
-            <FaArrowAltCircleLeft className='absolute top-1/2 left-8 text-5xl text-black z-10 cursor-pointer select-none' onClick={() => { prevSlide(current) }} />
-            <FaArrowAltCircleRight className='absolute top-1/2 right-8 text-5xl text-black z-10 cursor-pointer select-none' onClick={() => { nextSlide(current) }} />
-            {SliderData.map((slide, index) => {
-                return (
-                    <div
-                        className='slide transition-all ease-in-out'
-                        key={index}
-                    >
-                        {index === current && (
-                            <img src={slide.image} alt='travel image' className='w-[100vw] h-auto rounded-none rounded-lg bg-cover bg-center' />
-                        )}
-                    </div>
-                );
-            })}
-            <div className='absolute flex space-x-3 -translate-x-1/2 bottom-5 left-1/2'>
-                {SliderData.map((slide, index) => {
-                    return (
-                        <div className='mx-1 cursor-pointer text-2xl' onClick={() => gotoSlide(index)} key={index}>&#9679;</div>
-                    );
-                })}
-            </div>
-        </section>
-    );
-};
+        <Carousel animation='slide' duration='2000' navButtonsAlwaysVisible='true' stopAutoPlayOnHover='false'>
+            {
+                items.map((item, i) => <Item key={i} item={item} />)
+            }
+        </Carousel>
+    )
+}
 
-export default ImageSlider;
+function Item(props) {
+    return (
+        <img src={props.item} width='100%' alt={props.item} />
+    )
+}
