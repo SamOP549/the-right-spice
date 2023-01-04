@@ -24,6 +24,11 @@ const Menuitems = [
     icon: "truck",
     href: "/admin/allorders",
   },
+  {
+    title: "Blogs",
+    icon: "bookmark",
+    href: "/admin/blogs",
+  },
 ];
 
 export default Menuitems;

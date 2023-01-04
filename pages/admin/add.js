@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { ThemeProvider } from "@mui/material";
 import theme from "../../src/theme/theme";
 import FullLayout from "../../src/layouts/FullLayout";
+import slugify from 'react-slugify';
 import {
     Grid,
     Stack,
@@ -57,7 +58,7 @@ const Add = () => {
                                     onChange={handleChange}
                                     value={form.title ? form.title : ""}
                                 />
-                                <TextField onChange={handleChange} value={form.slug ? form.slug : ""} name="slug" label="Slug" variant="outlined" />
+                                <TextField onChange={handleChange} value={form.title ? slugify(form.title) : ""} name="slug" label="Slug" variant="outlined" />
                                 <TextField onChange={handleChange} value={form.size ? form.size : ""} name="size" label="Size" variant="outlined" />
                                 <TextField onChange={handleChange} value={form.price ? form.price : ""} name="price" label="Price" variant="outlined" />
                                 <TextField onChange={handleChange} value={form.availableQty ? form.availableQty : ""} name="availableQty" label="Available Quantity" variant="outlined" />

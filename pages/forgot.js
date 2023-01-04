@@ -27,6 +27,7 @@ const Forgot = () => {
             body: JSON.stringify(data),
         })
         const res = await t.json()
+        console.log(res)
         if (res.success) {
             toast.success('Password Reset email sent!', {
                 position: "bottom-center",
