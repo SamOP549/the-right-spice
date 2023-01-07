@@ -71,8 +71,8 @@ function MyApp({ Component, pageProps }) {
       itemCount += qty
     }
     else {
-      newCart[itemCode] = { itemCode, qty: 1, price, name, size, imageSrc, imageAlt, href }
-      itemCount += 1;
+      newCart[itemCode] = { itemCode, qty: qty, price, name, size, imageSrc, imageAlt, href }
+      itemCount += qty;
     }
     setItemCount(itemCount)
     setCart(newCart)

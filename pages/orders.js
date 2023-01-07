@@ -92,7 +92,7 @@ const Orders = () => {
                                       return (
                                         <tr key={order.products[product].itemCode} className="bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100">
                                           <td className="px-8 py-5 whitespace-nowrap text-sm font-medium text-gray-500 flex items-center md:mr-0 mr-6">
-                                            <img className='sm:w-16 sm:h-16 h-24 w-24' src={order.products[product].imageSrc} alt={order.products[product].imageAlt} />
+                                            <img className='sm:w-16 sm:h-full h-full w-24' src={order.products[product].imageSrc[0]["data_url"]} alt={order.products[product].imageAlt} />
                                             <div className='sm:text-sm text-xl font-semibold text-gray-800 px-6 sm:py-5 text-left'>
                                               <p>{order.products[product].name}  <span className='text-gray-500 font-normal sm:text-sm text-md'>x{order.products[product].qty}</span></p>
                                               <p className='sm:hidden text-gray-500 mt-2'>₹{order.products[product].price}</p>

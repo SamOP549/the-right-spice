@@ -76,7 +76,7 @@ const AllProducts = ({ products }) => {
                 </Typography>
               </TableCell>
               <TableCell>
-                <img src={product.img} alt={product.img} width="50px" />
+                <img src={product.img[0]["data_url"]} alt={product.img} width="50px" />
               </TableCell>
               <TableCell>
                 <Typography

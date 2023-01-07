@@ -5,14 +5,9 @@ const Menuitems = [
     href: "/admin",
   },
   {
-    title: "Add Product",
+    title: "Products",
     icon: "plus-circle",
-    href: "/admin/add",
-  },
-  {
-    title: "View Products",
-    icon: "eye",
-    href: "/admin/allproducts",
+    href: "/admin/products",
   },
   {
     title: "Image Uploader",

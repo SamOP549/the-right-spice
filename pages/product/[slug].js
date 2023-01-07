@@ -5,6 +5,7 @@ import mongoose from 'mongoose'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Error from 'next/error';
+import { display } from '@mui/system';
 
 const Post = ({ buyNow, addToCart, product, variants, error }) => {
   const router = useRouter()
@@ -15,10 +16,12 @@ const Post = ({ buyNow, addToCart, product, variants, error }) => {
   const [show, setShow] = useState(false);
   const [show2, setShow2] = useState(false);
   const [size, setSize] = useState()
+  const [displayImg, setDisplayImg] = useState('')
 
   useEffect(() => {
     if (!error) {
       setSize(product.size)
+      setDisplayImg(product.img[0]['data_url'])
     }
   }, [router.query])
 
@@ -51,6 +54,9 @@ const Post = ({ buyNow, addToCart, product, variants, error }) => {
     }
   }
 
+  const setDisplayImage = (event) => {
+    setDisplayImg(event.target.src)
+  }
 
 
   const refreshVariant = (newsize) => {
@@ -65,10 +71,23 @@ const Post = ({ buyNow, addToCart, product, variants, error }) => {
   return (
     <div>
       <section className="text-gray-600 body-font overflow-hidden bg-white">
-        <div className="container px-5 py-24 mx-auto">
+        <div className="container py-24 md:px-0 px-4 mx-auto">
           <div className="lg:w-4/5 mx-auto flex flex-wrap">
-            <img alt="ecommerce" className="lg:w-1/2 w-full h-64 object-cover object-center rounded" src={product.img} />
-            <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+            <div className='lg:w-1/2 w-full flex justify-start items-start max-h-max lg:pr-10'>
+              <div className='w-1/5 flex flex-col justify-center content-center space-y-6'>
+                {
+                  product.img.map((img, index) => {
+                    return (
+                      <img key={img} onClick={setDisplayImage} alt="ecommerce" className="w-full border border-[3px] border-red-700 active:border-amber-700 hover:opacity-80" src={img["data_url"]} />
+                    )
+                  })
+                }
+              </div>
+              <div className='w-4/5 pl-6 h-full'>
+                <img alt="ecommerce" className="w-4/5 mx-auto my-10" src={displayImg} />
+              </div>
+            </div>
+            <div className="lg:w-1/2 w-full lg:py-6 mt-6 lg:mt-0">
               <h2 className="text-sm title-font text-gray-500 tracking-widest">THE RIGHT SPICE</h2>
               <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{product.title} ({product.size})</h1>
               <div className="flex mb-4">
@@ -110,34 +129,43 @@ const Post = ({ buyNow, addToCart, product, variants, error }) => {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center justify-between">
-                <span className="title-font font-medium text-2xl text-gray-900">{product.availableQty <= 0 ? "Out of Stock!" : "₹" + product.price}</span>
-                {
-                  product.availableQty > 0 &&
-                  <div className='flex'>
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                      onClick={() => {
-                        if (quantity <= 1) {
-                          setQuantity((prevValue) => prevValue - 1)
-                        }
-                      }}
-                      fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer hover:fill-black hover:text-white focus:scale-125">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <p className="text-gray-500 mx-1">{quantity}</p>
-                    <svg xmlns="http://www.w3.org/2000/svg"
-                      onClick={() => {
-                        setQuantity((prevValue) => prevValue + 1)
-                      }}
-                      fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer hover:fill-black hover:text-white focus:scale-125">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                }
-                <button disabled={product.availableQty <= 0} onClick={() => { addToCart(slug, quantity, product.price, product.title, product.size, product.img, "spice", `/product/${slug}`) }} className="disabled:bg-blue-400 flex items-center justify-around gap-x-2 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Add To Cart
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
-                </button>
-                <button disabled={product.availableQty <= 0} onClick={() => { buyNow(slug, quantity, product.price, product.title, product.size, product.img, "spice", `/product/${slug}`) }} className="disabled:bg-blue-400 flex items-center justify-around gap-x-2 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Buy Now</button>
+              <div className="flex flex-col">
+                <div className='flex space-x-4'>
+                  <span className="title-font font-medium text-2xl text-gray-900">{product.availableQty <= 0 ? "Out of Stock!" : "₹" + product.price}</span>
+                </div>
+                <div className='flex mt-4 space-x-4'>
+                  {
+                    product.availableQty > 0 &&
+                    <div className='flex p-2'>
+                      <svg xmlns="http://www.w3.org/2000/svg"
+                        onClick={() => {
+                          if (quantity <= 1) {
+                            setQuantity(1)
+                          }
+                          else{
+                            setQuantity((prevValue) => prevValue - 1)
+                          }
+                        }}
+                        fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer hover:fill-black hover:text-white focus:scale-125">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <p className="text-gray-500 text-lg px-1">{quantity}</p>
+                      <svg xmlns="http://www.w3.org/2000/svg"
+                        onClick={() => {
+                          setQuantity((prevValue) => prevValue + 1)
+                        }}
+                        fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer hover:fill-black hover:text-white focus:scale-125">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                    </div>
+                  }
+                  <button disabled={product.availableQty <= 0} onClick={() => { addToCart(slug, quantity, product.price, product.title, product.size, product.img, "spice", `/product/${slug}`) }} className="disabled:bg-blue-400 flex items-center gap-x-3 content-center justify-center text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded-2xl w-full ">Add To Cart
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+                  </button>
+                </div>
+                <div className='mt-4'>
+                  <button disabled={product.availableQty <= 0} onClick={() => { buyNow(slug, quantity, product.price, product.title, product.size, product.img, "spice", `/product/${slug}`) }} className="disabled:bg-blue-400 flex items-center justify-around gap-x-2 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded-2xl w-full  ">Buy Now</button>
+                </div>
               </div>
               <div className='pin mt-6 flex space-x-2'>
                 <input className='px-2 border-2 border-black rounded-md' type='number' name='pin' onChange={(e) => setPin(e.target.value)} placeholder='Enter your Pincode' />

@@ -72,6 +72,6 @@ export async function getServerSideProps(context) {
     if (!mongoose.connections[0].readyState) {
         await mongoose.connect(process.env.MONGO_URI)
     }
-    let articles = await Article.find()
+    let articles = await Article.find().sort({ createdAt: -1 })
     return { props: { articles: JSON.parse(JSON.stringify(articles)) } }
 }

@@ -9,11 +9,12 @@ const handler = async (req, res) => {
             title: req.body.form.title,
             slug: req.body.form.slug,
             desc: req.body.form.desc,
-            img: "https://m.media-amazon.com/images/I/71vCJP9A6hL._SL1500_.jpg",
+            img: req.body.images,
             category: req.body.form.category,
             size: req.body.form.size,
             price: req.body.form.price,
             availableQty: req.body.form.availableQty,
+            comments: [],
         })
         await p.save()
         res.status(200).json({ success: "Success!" })
@@ -26,3 +27,11 @@ const handler = async (req, res) => {
 }
 
 export default connectDb(handler);
+
+export const config = {
+    api: {
+        bodyParser: {
+            sizeLimit: '10mb',
+        },
+    },
+}

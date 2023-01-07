@@ -119,9 +119,9 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                                                                                     <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                                                                         <Link href={cart[k].href} className='cursor-pointer'>
                                                                                             <img
-                                                                                                src={cart[k].imageSrc}
+                                                                                                src={cart[k].imageSrc[0]["data_url"]}
                                                                                                 alt={cart[k].imageAlt}
-                                                                                                className="h-full w-full object-cover object-center"
+                                                                                                className="h-full w-full object-cover object-center cursor-pointer"
                                                                                             />
                                                                                         </Link>
                                                                                     </div>
@@ -130,19 +130,19 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                                                                                         <div>
                                                                                             <div className="flex justify-between text-base font-medium text-gray-900">
                                                                                                 <h3>
-                                                                                                    <Link href={cart[k].href}>{cart[k].name}</Link>
+                                                                                                    <Link href={cart[k].href}><p>{cart[k].name}</p></Link>
                                                                                                 </h3>
                                                                                                 <p className="ml-4">₹{cart[k].price}</p>
                                                                                             </div>
                                                                                             <p className="mt-1 text-sm text-gray-500">{cart[k].size}</p>
                                                                                         </div>
                                                                                         <div className="flex flex-1 items-end justify-between text-sm">
-                                                                                            <div className='flex'>
+                                                                                            <div className='flex pt-3'>
                                                                                                 <p className="text-gray-500 mr-2">Qty</p>
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg" onClick={() => { removeFromCart(k, 1, cart[k].price, cart[k].name, cart[k].size, cart[k].imageSrc, cart[k].imageAlt, cart[k].href) }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer hover:fill-black hover:text-white focus:scale-125">
                                                                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                                                                 </svg>
-                                                                                                <p className="text-gray-500 mx-1">{cart[k].qty}</p>
+                                                                                                <p className="text-gray-500 px-1">{cart[k].qty}</p>
                                                                                                 <svg xmlns="http://www.w3.org/2000/svg" onClick={() => { addToCart(k, 1, cart[k].price, cart[k].name, cart[k].size, cart[k].imageSrc, cart[k].imageAlt, cart[k].href) }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer hover:fill-black hover:text-white focus:scale-125">
                                                                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                                                                 </svg>
@@ -206,30 +206,33 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                             </Transition.Root>
                         </div>
                     }
-                    {
-                        !user.value &&
-                        <Link href='/login'>
-                            <button className="btn btn-ghost">LogIn/SignUp</button>
-                        </Link>
-                    }
-                    {
-                        user.value &&
-                        <div className="dropdown dropdown-end">
-                            <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-                                <div className="rounded-full">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
-                                        <path fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clipRule="evenodd" />
-                                    </svg>
-                                </div>
-                            </label>
+
+                    <div className="dropdown dropdown-end">
+                        <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+                            <div className="rounded-full">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-8 h-8">
+                                    <path fillRule="evenodd" d="M18.685 19.097A9.723 9.723 0 0021.75 12c0-5.385-4.365-9.75-9.75-9.75S2.25 6.615 2.25 12a9.723 9.723 0 003.065 7.097A9.716 9.716 0 0012 21.75a9.716 9.716 0 006.685-2.653zm-12.54-1.285A7.486 7.486 0 0112 15a7.486 7.486 0 015.855 2.812A8.224 8.224 0 0112 20.25a8.224 8.224 0 01-5.855-2.438zM15.75 9a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" clipRule="evenodd" />
+                                </svg>
+                            </div>
+                        </label>
+                        {
+                            !user.value &&
+                            <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-white rounded-box w-52">
+                                <Link href='/login'>
+                                    <li><a>Login / SignUp</a></li>
+                                </Link>
+                            </ul>
+                        }
+                        {
+                            user.value &&
                             <ul tabIndex={0} className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-white rounded-box w-52">
                                 <Link href='/myaccount'><li><a className="justify-between">Profile</a></li></Link>
                                 <Link href='/orders'><li><a>Orders</a></li></Link>
                                 <li><a>Settings</a></li>
                                 <li onClick={logout}><a>Logout</a></li>
                             </ul>
-                        </div>
-                    }
+                        }
+                    </div>
                 </div>
             </div>
         </div >

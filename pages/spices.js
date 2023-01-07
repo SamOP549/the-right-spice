@@ -12,6 +12,7 @@ function classNames(...classes) {
 }
 
 const Spices = ({ products, addToCart }) => {
+  console.log(products)
   const [open, setOpen] = useState(false)
   const [hover, setHover] = useState(false)
   const [product, setProduct] = useState({})
@@ -204,7 +205,7 @@ const Spices = ({ products, addToCart }) => {
                       <Link passHref={true} href={`/product/${products[item].slug}`} key={products[item]._id}>
                       <img
                         alt="Simple Watch"
-                        src={products[item].img}
+                        src={products[item].img[0]["data_url"]}
                         className="object-cover w-full rounded aspect-square"
                       />
                       </Link>

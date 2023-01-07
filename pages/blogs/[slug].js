@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Article from '../../models/Article'
 import mongoose from 'mongoose'
+import { Link } from '@mui/material'
 
 const Blog = ({ article, articles }) => {
   const [recents, setRecents] = useState([])
@@ -29,26 +30,23 @@ const Blog = ({ article, articles }) => {
         <div className='mt-6 text-base' dangerouslySetInnerHTML={{ __html: article.excerpt }} />
       </div>
       <div className='w-1/5 pt-12'>
-        Recent posts
+        <h1 className='text-lg font-medium'>Recent Posts</h1>
+        <div className='bg-gray-200 h-px mt-2' />
         <div className='mt-4 flex-col'>
           {recents.map((recent, index) => (
-            <div key={index} className='mt-4 flex'>
-
-              <div className='w-auto'>
-                <img className='h-12 w-full' src={recent.coverImg[0].data_url} alt='image' />
-              </div>
-              <div className='flex-col w-full'>
-                <h1 className='text-xs font-bold'>{recent.title}</h1>
-                <div className='flex justify-end'>
-                  <button className='text-red-800'>
-                    Read
-                  </button>
+            <Link key={index} href={`/blogs/${recent.slug}`}>
+              <div className='group mt-4 flex gap-x-4 items-center hover:bg-gray-50 rounded'>
+                <div className='w-1/3'>
+                  <img className='h-12 w-full' src={recent.coverImg[0].data_url} alt='image' />
+                </div>
+                <div className='w-2/3'>
+                  <h1 className='text-xs font-bold text-red-900 group-hover:text-red-700'>{recent.title}</h1>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
-      </div>x
+      </div>
     </div>
   )
 }

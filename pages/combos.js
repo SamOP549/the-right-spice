@@ -28,7 +28,7 @@ const Combos = ({ products }) => {
                   <a href="#" className="block shadow-2xl rounded-lg p-3">
                     <img
                       alt="Simple Watch"
-                      src={products[item].img}
+                      src={products[item].img[0]["data_url"]}
                       className="object-cover w-full rounded aspect-square"
                     />
 

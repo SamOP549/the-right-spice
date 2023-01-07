@@ -34,8 +34,8 @@ const MyOrder = ({ order, clearCart }) => {
                 return (
                   <div key={order.products[product].itemCode} className="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
                     <div className="pb-4 md:pb-8 w-full md:w-40">
-                      <img className="w-full hidden md:block" src={order.products[product].imageSrc} alt={order.products[product].imageAlt} />
-                      <img className="w-full md:hidden" src={order.products[product].imageSrc} alt={order.products[product].imageAlt} />
+                      <img className="w-full hidden md:block" src={order.products[product].imageSrc[0]["data_url"]} alt={order.products[product].imageAlt} />
+                      <img className="w-full md:hidden" src={order.products[product].imageSrc[0]["data_url"]} alt={order.products[product].imageAlt} />
                     </div>
                     <div className="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
                       <div className="w-full flex flex-col justify-start items-start space-y-8">
@@ -98,9 +98,11 @@ const MyOrder = ({ order, clearCart }) => {
           <div className="flex flex-col md:flex-row xl:flex-col justify-start items-stretch h-full w-full md:space-x-6 lg:space-x-8 xl:space-x-0">
             <div className="flex flex-col justify-start items-start flex-shrink-0">
               <div className="flex justify-center w-full md:justify-start items-center space-x-4 py-8 border-b border-gray-200">
-                <img src="https://i.ibb.co/5TSg7f6/Rectangle-18.png" alt="avatar" />
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
                 <div className="flex justify-start items-start flex-col space-y-2">
-                  <p className="text-base font-semibold leading-4 text-left text-gray-800">David Kent</p>
+                  <p className="text-base font-semibold leading-4 text-left text-gray-800">{order.fname} {order.lname}</p>
                 </div>
               </div>
 
@@ -122,9 +124,6 @@ const MyOrder = ({ order, clearCart }) => {
                   <p className="text-base font-semibold leading-4 text-center md:text-left text-gray-800">Billing Address</p>
                   <p className="w-48 lg:w-full xl:w-48 text-center md:text-left text-sm leading-5 text-gray-600">180 North King Street, Northhampton MA 1060</p>
                 </div>
-              </div>
-              <div className="flex w-full justify-center items-center md:justify-start md:items-start">
-                <button className="mt-6 md:mt-0 py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800">Edit Details</button>
               </div>
             </div>
           </div>
