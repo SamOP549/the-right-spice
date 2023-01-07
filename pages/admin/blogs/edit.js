@@ -24,7 +24,7 @@ import { useRouter } from 'next/router'
 import mongoose from 'mongoose';
 import Article from '../../../models/Article';
 
-const Add = ({ articles }) => {
+const Edit = ({ articles }) => {
     const { quill, quillRef } = useQuill();
     const [id, setId] = useState('')
     const [form, setForm] = useState({})
@@ -162,7 +162,7 @@ const Add = ({ articles }) => {
     )
 }
 
-export default Add
+export default Edit
 
 export async function getServerSideProps(context) {
     if (!mongoose.connections[0].readyState) {

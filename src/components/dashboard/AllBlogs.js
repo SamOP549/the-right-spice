@@ -18,7 +18,7 @@ const AllBlogs = ({ articles }) => {
     const router = useRouter()
     const [showArticles, setShowArticles] = useState(articles.slice(0,5))
     const [page, setPage] = React.useState(1);
-    const handleChange = (event, value) => {
+    const handlePageChange = (event, value) => {
         setPage(value);
         setShowArticles(articles.slice(value*5-5, value*5))
     };
@@ -203,7 +203,7 @@ const AllBlogs = ({ articles }) => {
                     Delete
                 </button>
             </div>
-            <Pagination className="flex justify-around" count={Math.ceil(articles.length/5)} page={page} onChange={handleChange} />
+            <Pagination className="flex justify-around" count={Math.ceil(articles.length/5)} page={page} onChange={handlePageChange} />
         </BaseCard>
     );
 };

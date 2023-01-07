@@ -114,15 +114,15 @@ const Spices = ({ products, addToCart }) => {
                               <RadioGroup value={selectedSize} onChange={(e) => setSelectedSize(e)} className="mt-4">
                                 <RadioGroup.Label className="sr-only"> Choose a size </RadioGroup.Label>
                                 <div className="grid grid-cols-4 gap-4">
-                                  { product.size && product.size.map((item, index) => (
+                                  {product.size && product.size.map((item, index) => (
                                     <RadioGroup.Option
                                       key={index}
                                       value={item}
                                       disabled={!item}
                                       className={({ active }) =>
                                         classNames(
-                                          
-                                           item ? 'bg-white shadow-sm text-gray-900 cursor-pointer'
+
+                                          item ? 'bg-white shadow-sm text-gray-900 cursor-pointer'
                                             : 'bg-gray-50 text-gray-200 cursor-not-allowed',
                                           active ? 'ring-2 ring-indigo-500' : '',
                                           'group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium hover:bg-gray-50 focus:outline-none sm:flex-1'
@@ -132,7 +132,7 @@ const Spices = ({ products, addToCart }) => {
                                       {({ active, checked }) => (
                                         <>
                                           <RadioGroup.Label as="span">{item}</RadioGroup.Label>
-                                          
+
                                           {item ? (
                                             <span
                                               className={classNames(
@@ -199,32 +199,35 @@ const Spices = ({ products, addToCart }) => {
           {
             Object.keys(products).map((item) => {
               return (
-                  <a href="#" className="block shadow-2xl rounded-lg p-3" key={products[item]._id} onMouseOver={() => handleHover(products[item]._id, products[item])}>
-                    <div className='relative'>
-                      {hover && (current == products[item]._id) && <button type="button" onClick={() => setOpen(true)} className="inline-block px-6 py-2 border-2 border-gray-400 text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out absolute bottom-0 w-full">Quick View</button>}
-                      <Link passHref={true} href={`/product/${products[item].slug}`} key={products[item]._id}>
+                <a href="#" className="block shadow-2xl rounded-lg p-3" key={products[item]._id} onMouseOver={() => handleHover(products[item]._id, products[item])}>
+                  <div className='relative'>
+                    {hover && (current == products[item]._id) && <button type="button" onClick={() => setOpen(true)} className="inline-block px-6 py-2 border-2 border-gray-400 text-gray-800 font-medium text-xs leading-tight uppercase rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out absolute bottom-0 w-full">Quick View</button>}
+                    <Link passHref={true} href={`/product/${products[item].slug}`} key={products[item]._id}>
                       <img
                         alt="Simple Watch"
                         src={products[item].img[0]["data_url"]}
                         className="object-cover w-full rounded aspect-square"
                       />
-                      </Link>
-                    </div>
-                    <h5 className="mt-4 text-sm text-black/90">
-                      {products[item].title}
-                    </h5>
+                    </Link>
+                  </div>
+                  <h5 className="mt-4 text-sm text-black/90">
+                    {products[item].title}
+                  </h5>
 
-                    <div className="flex items-center justify-between mt-4 font-bold text-black">
-                      <p className="text-lg">₹{products[item].price}</p>
+                  <div className="flex items-center justify-between mt-4 font-bold text-black">
+                    <p className="text-lg">₹{products[item].price}</p>
 
-                      <div className="text-xs tracking-wide">
-                        {products[item].size.includes('50g') && <span className='border border-red-500 px-1 mx-1'>50g</span>}
-                        {products[item].size.includes('100g') && <span className='border border-red-500 px-1 mx-1'>100g</span>}
-                        {products[item].size.includes('150g') && <span className='border border-red-500 px-1 mx-1'>150g</span>}
-                        {products[item].size.includes('200g') && <span className='border border-red-500 px-1 mx-1'>200g</span>}
-                      </div>
+                    <div className="text-xs tracking-wide">
+                      {
+                        products[item].size.map((weight, index) => {
+                          return (
+                            <span key={index} className='border border-red-500 px-1 mx-1'>{weight}</span>
+                          )
+                        })
+                      }
                     </div>
-                  </a>
+                  </div>
+                </a>
               )
             })
           }
@@ -253,7 +256,7 @@ export async function getServerSideProps() {
       if (item.availableQty > 0) {
         spices[item.title].size = [item.size]
       }
-      else{
+      else {
         spices[item.title].size = []
       }
     }

@@ -40,10 +40,13 @@ const Combos = ({ products }) => {
                       <p className="text-lg">₹{products[item].price}</p>
 
                       <div className="text-xs tracking-wide">
-                        {products[item].size.includes('50g') && <span className='border border-red-500 px-1 mx-1'>50g</span>}
-                        {products[item].size.includes('100g') && <span className='border border-red-500 px-1 mx-1'>100g</span>}
-                        {products[item].size.includes('150g') && <span className='border border-red-500 px-1 mx-1'>150g</span>}
-                        {products[item].size.includes('200g') && <span className='border border-red-500 px-1 mx-1'>200g</span>}
+                        {
+                          products[item].size.map((weight, index) => {
+                            return (
+                              <span key={index} className='border border-red-500 px-1 mx-1'>{weight}</span>
+                            )
+                          })
+                        }
                       </div>
                     </div>
                   </a>
