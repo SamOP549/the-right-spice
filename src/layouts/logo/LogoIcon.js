@@ -3,8 +3,12 @@ import { Link } from "@mui/material";
 
 const LogoIcon = () => {
   return (
-    <Link href="/" className="flex align-baseline">
-      <h3>Right Spice Admin</h3>
+    <Link href="/" className="flex">
+      <img
+        src="/logo.png"
+        alt="logo"
+        className="h-24"
+      />
     </Link>
   );
 };

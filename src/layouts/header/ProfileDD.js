@@ -1,7 +1,5 @@
 import React from "react";
 import FeatherIcon from "feather-icons-react";
-import Image from "next/image";
-import userimg from "../../../assets/images/users/user2.jpg";
 import {
   Box,
   Menu,
@@ -23,6 +21,11 @@ const ProfileDD = () => {
   const handleClose4 = () => {
     setAnchorEl4(null);
   };
+
+  const logout = () => {
+    localStorage.removeItem("admin");
+    window.location.href = "/admin";
+  }
   return (
     <>
       <Button
@@ -33,13 +36,9 @@ const ProfileDD = () => {
         onClick={handleClick4}
       >
         <Box display="flex" alignItems="center">
-          <Image
-            src={userimg}
-            alt={userimg}
-            width="30"
-            height="30"
-            className="roundedCircle"
-          />
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black" className="w-6 h-6">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
           <Box
             sx={{
               display: {
@@ -50,7 +49,7 @@ const ProfileDD = () => {
             }}
           >
             <Typography
-              color="textSecondary"
+              color="black"
               variant="h5"
               fontWeight="400"
               sx={{ ml: 1 }}
@@ -60,11 +59,12 @@ const ProfileDD = () => {
             <Typography
               variant="h5"
               fontWeight="700"
+              color="black"
               sx={{
                 ml: 1,
               }}
             >
-              Julia
+              Ansh
             </Typography>
             <FeatherIcon icon="chevron-down" width="20" height="20" />
           </Box>
@@ -90,26 +90,15 @@ const ProfileDD = () => {
               onClick={handleClose4}
             >
               <ListItemButton>
-                <ListItemText primary="Edit Profile" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemText primary="Account" />
-              </ListItemButton>
-              <ListItemButton>
                 <ListItemText primary="Change Password" />
-              </ListItemButton>
-              <ListItemButton>
-                <ListItemText primary="My Settings" />
               </ListItemButton>
             </List>
           </Box>
           <Divider />
           <Box p={2}>
-            <Link to="/">
-              <Button fullWidth variant="contained" color="primary">
-                Logout
-              </Button>
-            </Link>
+            <Button fullWidth variant="outlined" className="bg-red-500 text-white hover:bg-red-700" onClick={logout}>
+              Logout
+            </Button>
           </Box>
         </Box>
       </Menu>

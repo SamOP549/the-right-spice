@@ -6,8 +6,15 @@ import AllProducts from "../../src/components/dashboard/AllProducts";
 import { ThemeProvider } from "@mui/material";
 import theme from "../../src/theme/theme";
 import FullLayout from "../../src/layouts/FullLayout";
+import { useEffect } from "react";
 
 export default function Index() {
+    useEffect(() => {
+        const admin = JSON.parse(localStorage.getItem("admin"))
+        if (!admin) {
+            window.location.href = "/admin/login"
+        }
+    }, [])
     return (
         <ThemeProvider theme={theme}>
             <style jsx global>{`

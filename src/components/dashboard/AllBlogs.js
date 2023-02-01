@@ -12,12 +12,14 @@ import {
 import BaseCard from "../baseCard/BaseCard";
 import { useRouter } from "next/router";
 import Pagination from '@mui/material/Pagination';
+import Modal from "../../../components/Modal";
 
 const AllBlogs = ({ articles }) => {
 
     const router = useRouter()
     const [showArticles, setShowArticles] = useState(articles.slice(0,5))
     const [page, setPage] = React.useState(1);
+    const [showDeleteModal, setShowDeleteModal] = useState(false)
     const handlePageChange = (event, value) => {
         setPage(value);
         setShowArticles(articles.slice(value*5-5, value*5))
@@ -45,11 +47,24 @@ const AllBlogs = ({ articles }) => {
         }
     }
 
-    const refreshData = () => {
-        router.replace(router.asPath);
-    }
+    const openModal = (e) => {
+        e.preventDefault()
+        let count = 0
+        document.querySelectorAll('.blogs-check').forEach((el) => {
+          if (el.checked) {
+            count += 1;
+          }
+        })
+        if (count > 0) {
+          setShowDeleteModal(true)
+        }
+      }
+    
+      const onClose = () => {
+        setShowDeleteModal(false)
+      }
 
-    const deleteBlogs = async () => {
+    const del = async () => {
         let ids = []
         document.querySelectorAll('.blogs-check').forEach((el) => {
             if (el.checked) {
@@ -66,12 +81,14 @@ const AllBlogs = ({ articles }) => {
             body: JSON.stringify(sendData),
         })
         const data = await t.json()
-        refreshData()
+        router.reload()
         document.querySelector('.check-all').checked = false
+        setShowDeleteModal(false)
     }
 
     return (
         <BaseCard title="All Articles">
+        <Modal showDeleteModal={showDeleteModal} onClose={onClose} del={del} />
             <Table
                 aria-label="simple table"
                 sx={{
@@ -198,7 +215,7 @@ const AllBlogs = ({ articles }) => {
             </Table>
             <div className="mt-4 flex justify-end w-full">
                 <button
-                    onClick={deleteBlogs}
+                    onClick={openModal}
                     className='inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:opacity-90 hover:shadow-lg transition duration-150 ease-in-out'>
                     Delete
                 </button>

@@ -10,9 +10,9 @@ const Menuitems = [
     href: "/admin/products",
   },
   {
-    title: "Image Uploader",
+    title: "Promotions",
     icon: "image",
-    href: "/admin/imageuploader",
+    href: "/admin/promotions",
   },
   {
     title: "Orders",

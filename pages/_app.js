@@ -141,9 +141,15 @@ function MyApp({ Component, pageProps }) {
         progress={progress}
         onLoaderFinished={() => setProgress(0)}
       />
-      <Navbar logout={logout} user={user} key={key} cart={cart} itemCount={itemCount} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
+      {
+        router.pathname != "/admin/login" &&
+        <Navbar logout={logout} user={user} key={key} cart={cart} itemCount={itemCount} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
+      }
       <Component buyNow={buyNow} cart={cart} itemCount={itemCount} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
-      <Footer />
+      {
+        router.pathname != "/admin/login" &&
+        <Footer />
+      }
     </div>
   )
 }

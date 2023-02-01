@@ -1,4 +1,4 @@
-import React, { useEffect , useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Typography,
   Box,
@@ -12,12 +12,14 @@ import {
 import BaseCard from "../baseCard/BaseCard";
 import { useRouter } from "next/router";
 import Pagination from '@mui/material/Pagination';
+import Modal from "../../../components/Modal";
 
 const AllProducts = ({ products }) => {
 
   const router = useRouter()
-  const [showProducts, setShowProducts] = useState(products.slice(0, 5))
+  const [showProducts, setShowProducts] = useState(products?.slice(0, 5))
   const [page, setPage] = React.useState(1);
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
   const handlePageChange = (event, value) => {
     setPage(value);
     setShowProducts(products.slice(value * 5 - 5, value * 5))
@@ -44,11 +46,24 @@ const AllProducts = ({ products }) => {
     router.push('/admin/products/edit?id=' + id)
   }
 
-  const refreshData = () => {
-    router.replace(router.asPath);
+  const openModal = (e) => {
+    e.preventDefault()
+    let count = 0
+    document.querySelectorAll('.products-check').forEach((el) => {
+      if (el.checked) {
+        count += 1;
+      }
+    })
+    if (count > 0) {
+      setShowDeleteModal(true)
+    }
   }
 
-  const deleteProducts = async () => {
+  const onClose = () => {
+    setShowDeleteModal(false)
+  }
+
+  const del = async () => {
     let ids = []
     document.querySelectorAll('.products-check').forEach((el) => {
       if (el.checked) {
@@ -65,12 +80,14 @@ const AllProducts = ({ products }) => {
       body: JSON.stringify(sendData),
     })
     const data = await t.json()
-    refreshData()
+    router.reload()
     document.querySelector('.check-all').checked = false
+    setShowDeleteModal(false)
   }
 
   return (
     <BaseCard title="All Products">
+      <Modal showDeleteModal={showDeleteModal} onClose={onClose} del={del} />
       <Table
         aria-label="simple table"
         sx={{
@@ -204,12 +221,12 @@ const AllProducts = ({ products }) => {
       </Table>
       <div className="mt-4 flex justify-end w-full">
         <button
-          onClick={deleteProducts}
+          onClick={openModal}
           className='inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:opacity-90 hover:shadow-lg transition duration-150 ease-in-out'>
           Delete
         </button>
       </div>
-      <Pagination className="flex justify-around" count={Math.ceil(products.length/5)} page={page} onChange={handlePageChange} />
+      <Pagination className="flex justify-around" count={Math.ceil(products?.length / 5)} page={page} onChange={handlePageChange} />
     </BaseCard>
   );
 };
