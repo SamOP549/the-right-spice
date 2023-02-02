@@ -83,18 +83,6 @@ const ProfileDD = () => {
         }}
       >
         <Box>
-          <Box p={2} pt={0}>
-            <List
-              component="nav"
-              aria-label="secondary mailbox folder"
-              onClick={handleClose4}
-            >
-              <ListItemButton>
-                <ListItemText primary="Change Password" />
-              </ListItemButton>
-            </List>
-          </Box>
-          <Divider />
           <Box p={2}>
             <Button fullWidth variant="outlined" className="bg-red-500 text-white hover:bg-red-700" onClick={logout}>
               Logout

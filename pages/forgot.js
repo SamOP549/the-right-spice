@@ -91,17 +91,6 @@ const Forgot = () => {
 
     return (
         <section className="bg-white">
-            <ToastContainer
-                position="bottom-center"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
             <div className="flex justify-center min-h-screen">
                 <div className="hidden bg-cover bg-center lg:block lg:w-1/2" style={{ backgroundImage: "url('https://source.unsplash.com/oWTW-jNGl9I/600x800')" }}>
                 </div>

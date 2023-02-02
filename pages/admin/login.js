@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { LockClosedIcon } from '@heroicons/react/20/solid'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -7,19 +9,27 @@ export default function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    if (email == "12@12.com") {
-      if (password == "123456") {
-        localStorage.setItem("admin", JSON.stringify({ email: email }))
-        window.location.href = "/admin"
-      }
+    if (email === process.env.NEXT_PUBLIC_ADMIN_EMAIL && password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
+      localStorage.setItem("admin", JSON.stringify({ email: email }))
+      window.location.href = "/admin"
     }
     else {
-      alert("Invalid Credentials")
+      toast.error("Invalid Credentials")
     }
   }
 
   return (
     <>
+      <style jsx global>
+        {`
+        .footer{
+          display: none;
+        }
+        .navbar{
+          display: none;
+        }
+        `}
+      </style>
       <div className="flex min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 h-[100vh] bg-blue-400">
         <div className="w-full max-w-md space-y-8 bg-white p-6 rounded-lg">
           <div>

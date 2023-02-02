@@ -171,17 +171,6 @@ const Post = ({ buyNow, addToCart, product, variants, error }) => {
               <div className='pin mt-6 flex space-x-2'>
                 <input className='px-2 border-2 border-black rounded-md' type='number' name='pin' onChange={(e) => setPin(e.target.value)} placeholder='Enter your Pincode' />
                 <button onClick={checkServiceability} className="flex items-center justify-around gap-x-2 text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">Check</button>
-                <ToastContainer
-                  position="bottom-center"
-                  autoClose={2000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                />
               </div>
               {(service === false && service != null) && <div className='text-red-700 text-sm mt-3'>
                 Sorry! We do not deliver to this pincode yet.

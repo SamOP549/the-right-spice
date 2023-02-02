@@ -219,17 +219,6 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
   }
   return (
     <section>
-      <ToastContainer
-        position="bottom-center"
-        autoClose={2000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
 
       <h1 className="sr-only">Checkout</h1>
 

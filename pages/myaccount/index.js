@@ -179,17 +179,6 @@ const Myaccount = () => {
 
     return (
         <Fragment>
-            <ToastContainer
-                position="bottom-center"
-                autoClose={2000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                pauseOnFocusLoss
-                draggable
-                pauseOnHover
-            />
             <div className='px-10 py-10'>
 
                 <h1 className='text-center mb-6 text-black font-extrabold text-2xl'>Your Profile</h1>
