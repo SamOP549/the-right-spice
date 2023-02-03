@@ -1,9 +1,11 @@
 import Head from 'next/head'
-import Carousel from "react-multi-carousel";
-import "react-multi-carousel/lib/styles.css";
-import ImageSlider from '../components/ImageSlider'
+import ImageSlider from '../components/ImageSlider';
+import Promotion from '../models/Promotion';
+import Product from '../models/Product';
+import mongoose from 'mongoose';
+import spicescover from "../public/spices-cover.jpg"
 
-export default function Home() {
+export default function Home({ promotions, spices, combos }) {
   const responsive = {
     superLargeDesktop: {
       // the naming can be any, depends on you.
@@ -30,13 +32,12 @@ export default function Home() {
         <meta name="description" content="The Right Spice" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <ImageSlider />
+      <div style={{ display: 'flex' }}>
+        <ImageSlider screen={0} promotions={promotions} />
+      </div>
       <section>
         <div className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
-          <div
-            className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:items-stretch"
-          >
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:items-stretch">
             <div className="flex items-center rounded bg-gray-100 p-8">
               <div className="mx-auto text-center lg:text-left">
                 <h2 className="text-2xl font-bold">Spices</h2>
@@ -53,104 +54,10 @@ export default function Home() {
                 </a>
               </div>
             </div>
+            <div className='grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-3 lg:py-12'>
+              <ImageSlider screen={1} items={spices} />
+            </div>
 
-            <Carousel className="grid grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-3 lg:py-12"
-              responsive={responsive}
-              draggable={true}
-              swipeable={true}
-              slidesToSlide={1}
-            >
-              <div className='mx-1'>
-                <a href="#" className="block">
-                  <img
-                    alt="Simple Watch"
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1598&q=80"
-                    className="aspect-square w-full rounded object-cover"
-                  />
-
-                  <div className="mt-2">
-                    <h3 className="font-medium">Simple Watch 1</h3>
-
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
-                  </div>
-                </a>
-              </div>
-              <div className='mx-1'>
-                <a href="#" className="block">
-                  <img
-                    alt="Simple Watch"
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1598&q=80"
-                    className="aspect-square w-full rounded object-cover"
-                  />
-
-                  <div className="mt-2">
-                    <h3 className="font-medium">Simple Watch 2</h3>
-
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
-                  </div>
-                </a>
-              </div>
-              <div className='mx-1'>
-                <a href="#" className="block">
-                  <img
-                    alt="Simple Watch"
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1598&q=80"
-                    className="aspect-square w-full rounded object-cover"
-                  />
-
-                  <div className="mt-2">
-                    <h3 className="font-medium">Simple Watch 3</h3>
-
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
-                  </div>
-                </a>
-              </div>
-              <div className='mx-1'>
-                <a href="#" className="block">
-                  <img
-                    alt="Simple Watch"
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1598&q=80"
-                    className="aspect-square w-full rounded object-cover"
-                  />
-
-                  <div className="mt-2">
-                    <h3 className="font-medium">Simple Watch 4</h3>
-
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
-                  </div>
-                </a>
-              </div>
-              <div className='mx-1'>
-                <a href="#" className="block">
-                  <img
-                    alt="Simple Watch"
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1598&q=80"
-                    className="aspect-square w-full rounded object-cover"
-                  />
-
-                  <div className="mt-2">
-                    <h3 className="font-medium">Simple Watch 5</h3>
-
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
-                  </div>
-                </a>
-              </div>
-              <div className='mx-1'>
-                <a href="#" className="block">
-                  <img
-                    alt="Simple Watch"
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1598&q=80"
-                    className="aspect-square w-full rounded object-cover"
-                  />
-
-                  <div className="mt-2">
-                    <h3 className="font-medium">Simple Watch 6</h3>
-
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
-                  </div>
-                </a>
-              </div>
-            </Carousel>
           </div>
         </div>
       </section>
@@ -177,107 +84,57 @@ export default function Home() {
               </div>
             </div>
 
-            <Carousel className="grid grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-3 lg:py-12"
-              responsive={responsive}
-              draggable={true}
-              swipeable={true}
-              slidesToSlide={1}
-            >
-              <div className='mx-1'>
-                <a href="#" className="block">
-                  <img
-                    alt="Simple Watch"
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1598&q=80"
-                    className="aspect-square w-full rounded object-cover"
-                  />
-
-                  <div className="mt-2">
-                    <h3 className="font-medium">Simple Watch 1</h3>
-
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
-                  </div>
-                </a>
-              </div>
-              <div className='mx-1'>
-                <a href="#" className="block">
-                  <img
-                    alt="Simple Watch"
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1598&q=80"
-                    className="aspect-square w-full rounded object-cover"
-                  />
-
-                  <div className="mt-2">
-                    <h3 className="font-medium">Simple Watch 2</h3>
-
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
-                  </div>
-                </a>
-              </div>
-              <div className='mx-1'>
-                <a href="#" className="block">
-                  <img
-                    alt="Simple Watch"
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1598&q=80"
-                    className="aspect-square w-full rounded object-cover"
-                  />
-
-                  <div className="mt-2">
-                    <h3 className="font-medium">Simple Watch 3</h3>
-
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
-                  </div>
-                </a>
-              </div>
-              <div className='mx-1'>
-                <a href="#" className="block">
-                  <img
-                    alt="Simple Watch"
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1598&q=80"
-                    className="aspect-square w-full rounded object-cover"
-                  />
-
-                  <div className="mt-2">
-                    <h3 className="font-medium">Simple Watch 4</h3>
-
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
-                  </div>
-                </a>
-              </div>
-              <div className='mx-1'>
-                <a href="#" className="block">
-                  <img
-                    alt="Simple Watch"
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1598&q=80"
-                    className="aspect-square w-full rounded object-cover"
-                  />
-
-                  <div className="mt-2">
-                    <h3 className="font-medium">Simple Watch 5</h3>
-
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
-                  </div>
-                </a>
-              </div>
-              <div className='mx-1'>
-                <a href="#" className="block">
-                  <img
-                    alt="Simple Watch"
-                    src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1598&q=80"
-                    className="aspect-square w-full rounded object-cover"
-                  />
-
-                  <div className="mt-2">
-                    <h3 className="font-medium">Simple Watch 6</h3>
-
-                    <p className="mt-1 text-sm text-gray-700">$150</p>
-                  </div>
-                </a>
-              </div>
-            </Carousel>
+            <div className='grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-3 lg:py-12'>
+              <ImageSlider screen={1} items={combos} />
+            </div>
           </div>
         </div>
       </section>
 
     </div>
   )
+}
+
+export async function getServerSideProps(context) {
+  if (!mongoose.connections[0].readyState) {
+    await mongoose.connect(process.env.MONGO_URI)
+  }
+  let promotions = await Promotion.find()
+  let products = await Product.find({ category: "spices" })
+  let spices = {}
+  for (let item of products) {
+    if (item.title in spices) {
+      if (!spices[item.title].size.includes(item.size) && item.availableQty > 0) {
+        spices[item.title].size.push(item.size)
+      }
+    }
+    else {
+      spices[item.title] = JSON.parse(JSON.stringify(item))
+      if (item.availableQty > 0) {
+        spices[item.title].size = [item.size]
+      }
+      else {
+        spices[item.title].size = []
+      }
+    }
+  }
+  products = await Product.find({ category: "combos" })
+  let combos = {}
+  for (let item of products) {
+    if (item.title in combos) {
+      if (!combos[item.title].size.includes(item.size) && item.availableQty > 0) {
+        combos[item.title].size.push(item.size)
+      }
+    }
+    else {
+      combos[item.title] = JSON.parse(JSON.stringify(item))
+      if (item.availableQty > 0) {
+        combos[item.title].size = [item.size]
+      }
+      else {
+        combos[item.title].size = []
+      }
+    }
+  }
+  return { props: { promotions: JSON.parse(JSON.stringify(promotions)), spices: JSON.parse(JSON.stringify(spices)), combos: JSON.parse(JSON.stringify(combos)) } }
 }
