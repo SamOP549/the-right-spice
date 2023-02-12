@@ -101,7 +101,7 @@ const AllProducts = ({ products }) => {
               <Typography color="textSecondary" variant="h6">
                 <input
                   onClick={selectAll}
-                  class="form-check-input check-all appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" id="inlineCheckbox1" />
+                  className="form-check-input check-all appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" id="inlineCheckbox1" />
               </Typography>
             </TableCell>
             <TableCell className="border-r">
@@ -151,7 +151,7 @@ const AllProducts = ({ products }) => {
                     fontWeight: "500",
                   }}
                 >
-                  <input class="form-check-input products-check appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" id="inlineCheckbox1" value={product._id} />
+                  <input className="form-check-input products-check appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" id="inlineCheckbox1" value={product._id} />
                 </Typography>
               </TableCell>
               <TableCell>

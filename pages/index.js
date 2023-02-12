@@ -3,7 +3,7 @@ import ImageSlider from '../components/ImageSlider';
 import Promotion from '../models/Promotion';
 import Product from '../models/Product';
 import mongoose from 'mongoose';
-import spicescover from "../public/spices-cover.jpg"
+import Link from 'next/link';
 
 export default function Home({ promotions, spices, combos }) {
   const responsive = {
@@ -38,23 +38,38 @@ export default function Home({ promotions, spices, combos }) {
       <section>
         <div className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:items-stretch">
-            <div className="flex items-center rounded bg-gray-100 p-8">
-              <div className="mx-auto text-center lg:text-left">
-                <h2 className="text-2xl font-bold">Spices</h2>
+            <div className="group relative block">
+              <div className="relative h-[350px] sm:h-[600px]">
+                <img
+                  src="https://images.unsplash.com/photo-1593795899768-947c4929449d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2672&q=80"
+                  alt=""
+                  className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
+                />
 
-                <p className="mt-4 max-w-[45ch] text-sm text-gray-700">
-                  Check out our new range of spices!!
+                <img
+                  src="https://images.unsplash.com/photo-1593795899630-b6033c0fa58d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+                  alt=""
+                  className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
+                />
+              </div>
+
+              <div className="absolute inset-0 flex flex-col items-start justify-end p-6">
+                <h3 className="text-xl font-medium text-white">Spices</h3>
+
+                <p className="mt-1.5 max-w-[40ch] text-xs text-white">
+                  Check out our newly launched spices!!
                 </p>
-
-                <a
-                  href="#"
-                  className="mt-6 inline-block rounded bg-black px-6 py-3 text-sm text-white"
-                >
-                  View the Range
-                </a>
+                <Link href="/spices">
+                  <span
+                    className="mt-3 cursor-pointer inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+                  >
+                    Shop Now
+                  </span>
+                </Link>
               </div>
             </div>
-            <div className='grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-3 lg:py-12'>
+
+            <div className='grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-3 lg:py-8 my-auto'>
               <ImageSlider screen={1} items={spices} />
             </div>
 
@@ -67,24 +82,38 @@ export default function Home({ promotions, spices, combos }) {
           <div
             className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:items-stretch"
           >
-            <div className="flex items-center rounded bg-gray-100 p-8">
-              <div className="mx-auto text-center lg:text-left">
-                <h2 className="text-2xl font-bold">Combos</h2>
+            <div className="group relative block">
+              <div className="relative h-[350px] sm:h-[600px]">
+                <img
+                  src="https://images.unsplash.com/photo-1593795899768-947c4929449d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2672&q=80"
+                  alt=""
+                  className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
+                />
 
-                <p className="mt-4 max-w-[45ch] text-sm text-gray-700">
-                  Check out our newly launched Combos!!
+                <img
+                  src="https://images.unsplash.com/photo-1593795899630-b6033c0fa58d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+                  alt=""
+                  className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
+                />
+              </div>
+
+              <div className="absolute inset-0 flex flex-col items-start justify-end p-6">
+                <h3 className="text-xl font-medium text-white">Combos</h3>
+
+                <p className="mt-1.5 max-w-[40ch] text-xs text-white">
+                  Check out our newly launched combos!!
                 </p>
-
-                <a
-                  href="#"
-                  className="mt-6 inline-block rounded bg-black px-6 py-3 text-sm text-white"
-                >
-                  View the Range
-                </a>
+                <Link href="/combos">
+                  <span
+                    className="mt-3 cursor-pointer inline-block bg-black px-5 py-3 text-xs font-medium uppercase tracking-wide text-white"
+                  >
+                    Shop Now
+                  </span>
+                </Link>
               </div>
             </div>
 
-            <div className='grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-3 lg:py-12'>
+            <div className='grid-cols-2 gap-4 lg:col-span-2 lg:grid-cols-3 lg:py-8 my-auto'>
               <ImageSlider screen={1} items={combos} />
             </div>
           </div>
