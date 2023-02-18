@@ -2,7 +2,7 @@ import React from 'react'
 
 const About = () => {
   return (
-    <div className="container my-24 px-6 mx-auto">
+    <div className="container my-8 px-6 mx-auto">
       <div>
         <span className="inline-block w-12 h-1 bg-red-700"></span>
 
@@ -14,7 +14,7 @@ const About = () => {
       </div>
 
       <section className="mb-32 mt-16 text-gray-800">
-        <img src="https://mdbootstrap.com/img/new/slides/198.jpg" className="w-full shadow-lg rounded-lg mb-6" alt="" />
+        <img src="./about-cover.jpg" className="w-full shadow-lg rounded-lg mb-6" alt="About Cover" />
 
         <p>
           Welcome to The Right Spice!

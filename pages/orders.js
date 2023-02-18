@@ -59,8 +59,8 @@ const Orders = () => {
                               </div>
                             </div>
                             <div className='flex sm:mx-2 py-2 -sm:w-full justify-end sm:px-0 px-2 space-x-3'>
-                              <Link href={`/order?id=${order._id}`}><button type="button" className="px-2 py-2 m-2 border-2 sm:mx-0 mx-auto sm:w-auto w-full border-gray-800 text-gray-800 font-medium sm:text-sm text-xl leading-tight rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">View Order</button></Link>
-                              <button type="button" className="px-2 py-2 m-2 border-2 sm:mx-0 mx-auto sm:w-auto w-full border-gray-800 text-gray-800 font-medium sm:text-sm text-xl leading-tight rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">View Invoice</button>
+                              <Link href={`/order?id=${order._id}`}><button className="px-2 py-2 m-2 border-2 sm:mx-0 mx-auto sm:w-auto w-full border-gray-800 text-gray-800 font-medium sm:text-sm text-xl leading-tight rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">View Order</button></Link>
+                              <button className="px-2 py-2 m-2 border-2 sm:mx-0 mx-auto sm:w-auto w-full border-gray-800 text-gray-800 font-medium sm:text-sm text-xl leading-tight rounded hover:bg-black hover:bg-opacity-5 focus:outline-none focus:ring-0 transition duration-150 ease-in-out">View Invoice</button>
                             </div>
                           </div>
                         </div>

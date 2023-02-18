@@ -96,12 +96,10 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                                                                         <button
                                                                             onClick={clearCart}
                                                                             disabled={Object.keys(cart).length === 0}
-                                                                            type="button"
                                                                             className="font-medium text-indigo-600 hover:text-indigo-500 mr-6 disabled:text-indigo-300">
                                                                             Clear Cart
                                                                         </button>
                                                                         <button
-                                                                            type="button"
                                                                             className="-m-2 p-2 text-gray-400 hover:text-gray-500"
                                                                             onClick={() => setOpen(false)}>
                                                                             <span className="sr-only">Close panel</span>
@@ -151,7 +149,6 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
 
                                                                                             <div className="flex">
                                                                                                 <button
-                                                                                                    type="button"
                                                                                                     onClick={() => { removeFromCart(k, cart[k].qty, cart[k].price, cart[k].name, cart[k].size, cart[k].imageSrc, cart[k].imageAlt, cart[k].href) }}
                                                                                                     className="font-medium text-indigo-600 hover:text-indigo-500"
                                                                                                 >
@@ -187,7 +184,6 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                                                                     <p>
                                                                         or&nbsp;
                                                                         <button
-                                                                            type="button"
                                                                             className="font-medium text-indigo-600 hover:text-indigo-500"
                                                                             onClick={() => setOpen(false)}>
                                                                             Continue Shopping

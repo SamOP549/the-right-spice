@@ -24,12 +24,12 @@ export default function Demo({ items }) {
                                     <img
                                         alt={items[item].title}
                                         src={items[item].img[0]["data_url"]}
-                                        class="h-96 w-full object-cover"
+                                        className="h-96 w-full object-cover"
                                     />
 
-                                    <h3 class="mt-4 font-medium">{items[item].title}</h3>
+                                    <h3 className="mt-4 font-medium">{items[item].title}</h3>
 
-                                    <p class="mt-2 text-sm text-gray-700">
+                                    <p className="mt-2 text-sm text-gray-700">
                                         ₹{items[item].price}
                                     </p>
                                 </div>

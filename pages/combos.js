@@ -8,7 +8,7 @@ import mongoose from "mongoose";
 const Combos = ({ products }) => {
   return (
     <section>
-      <div className="max-w-screen-xl px-4 py-8 mx-auto">
+      <div className="max-w-screen-xl px-6 py-8 mx-auto">
         <div>
           <span className="inline-block w-12 h-1 bg-red-700"></span>
 

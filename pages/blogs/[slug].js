@@ -22,29 +22,26 @@ const Blog = ({ article, articles }) => {
   }
 
   return (
-    <div className='flex p-12 justify-start space-x-4'>
-      <div className='w-4/5 p-12'>
+    <div className='flex md:p-12 p-4 justify-start space-x-4'>
+      <div className='md:w-4/5 w-full p-12'>
         <h1 className='text-5xl font-bold'>{article.title}</h1>
         <p className='mt-4 text-gray-600'>{formatDate(article.updatedAt)}</p>
         <img className='mt-10' src={article.coverImg[0].data_url} alt='image' />
         <div className='mt-6 text-base' dangerouslySetInnerHTML={{ __html: article.excerpt }} />
       </div>
-      <div className='w-1/5 pt-12'>
+      <div className='md:block hidden w-1/5 pt-12'>
         <h1 className='text-lg font-medium'>Recent Posts</h1>
         <div className='bg-gray-200 h-px mt-2' />
         <div className='mt-4 flex-col'>
-          {recents.map((recent, index) => (
-            <Link key={index} href={`/blogs/${recent.slug}`}>
-              <div className='group mt-4 flex gap-x-4 items-center hover:bg-gray-50 rounded'>
-                <div className='w-1/3'>
-                  <img className='h-12 w-full' src={recent.coverImg[0].data_url} alt='image' />
-                </div>
-                <div className='w-2/3'>
-                  <h1 className='text-xs font-bold text-red-900 group-hover:text-red-700'>{recent.title}</h1>
-                </div>
-              </div>
-            </Link>
-          ))}
+          <ul>
+            {recents.map((recent, index) => (
+              <li key={index}>
+                <Link href={`/blogs/${recent.slug}`}>
+                  <p className='no-underline'>{recent.title}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

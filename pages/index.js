@@ -41,14 +41,14 @@ export default function Home({ promotions, spices, combos }) {
             <div className="group relative block">
               <div className="relative h-[350px] sm:h-[600px]">
                 <img
-                  src="https://images.unsplash.com/photo-1593795899768-947c4929449d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2672&q=80"
-                  alt=""
+                  src="./newrange/new-spices-2.jpg"
+                  alt="Spices Spoons"
                   className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                 />
 
                 <img
-                  src="https://images.unsplash.com/photo-1593795899630-b6033c0fa58d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-                  alt=""
+                  src="./newrange/new-spices-1.jpg"
+                  alt="Spices Spoons 2"
                   className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
                 />
               </div>
@@ -85,14 +85,14 @@ export default function Home({ promotions, spices, combos }) {
             <div className="group relative block">
               <div className="relative h-[350px] sm:h-[600px]">
                 <img
-                  src="https://images.unsplash.com/photo-1593795899768-947c4929449d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2672&q=80"
-                  alt=""
+                  src="./newrange/new-combos-2.jpg"
+                  alt="Spices bowls"
                   className="absolute inset-0 h-full w-full object-cover opacity-100 group-hover:opacity-0"
                 />
 
                 <img
-                  src="https://images.unsplash.com/photo-1593795899630-b6033c0fa58d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-                  alt=""
+                  src="./newrange/new-combos-1.jpg"
+                  alt="Spices bowls 2"
                   className="absolute inset-0 h-full w-full object-cover opacity-0 group-hover:opacity-100"
                 />
               </div>

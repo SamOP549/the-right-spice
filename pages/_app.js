@@ -7,7 +7,6 @@ import { useRouter } from 'next/router'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import LoadingBar from 'react-top-loading-bar'
-import Script from 'next/script'
 
 function MyApp({ Component, pageProps }) {
   const [progress, setProgress] = useState(0)
@@ -153,7 +152,7 @@ function MyApp({ Component, pageProps }) {
         pauseOnHover
       />
       <Navbar logout={logout} user={user} key={key} cart={cart} itemCount={itemCount} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
-      <Component buyNow={buyNow} cart={cart} itemCount={itemCount} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
+      <Component user={user} buyNow={buyNow} cart={cart} itemCount={itemCount} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
       <Footer />
     </div>
   )

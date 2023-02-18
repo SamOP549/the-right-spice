@@ -24,7 +24,7 @@ const Add = () => {
     const router = useRouter()
     const [form, setForm] = useState({})
     const [images, setImages] = React.useState([]);
-    const maxNumber = 3;
+    const maxNumber = 4;
     const handleChange = (e) => {
         e.preventDefault()
         console.log(form)
@@ -95,7 +95,7 @@ const Add = () => {
                                         />
                                     </RadioGroup>
                                 </FormControl>
-                                <label>Add upto 3 images:</label>
+                                <label>Add upto 4 images:</label>
                                 <ImageUploading
                                     multiple
                                     value={images}

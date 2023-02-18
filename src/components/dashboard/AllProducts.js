@@ -219,14 +219,25 @@ const AllProducts = ({ products }) => {
           ))}
         </TableBody>
       </Table>
-      <div className="mt-4 flex justify-end w-full">
-        <button
-          onClick={openModal}
-          className='inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:opacity-90 hover:shadow-lg transition duration-150 ease-in-out'>
-          Delete
-        </button>
-      </div>
-      <Pagination className="flex justify-around" count={Math.ceil(products?.length / 5)} page={page} onChange={handlePageChange} />
+      {
+        products?.length === 0 ? (
+          <div className="flex justify-center items-center h-48">
+            <h1 className="text-2xl font-medium">No Products Found</h1>
+          </div>
+        ) :
+          <div className="mt-4 flex justify-end w-full">
+            <button
+              onClick={openModal}
+              className='inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:opacity-90 hover:shadow-lg transition duration-150 ease-in-out'>
+              Delete
+            </button>
+          </div>
+      }
+      {
+        products?.length > 5 && (
+          <Pagination className="flex justify-around" count={Math.ceil(products?.length / 5)} page={page} onChange={handlePageChange} />
+        )
+      }
     </BaseCard>
   );
 };
