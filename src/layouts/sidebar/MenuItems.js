@@ -24,6 +24,11 @@ const Menuitems = [
     icon: "bookmark",
     href: "/admin/blogs",
   },
+  {
+    title: "Comments",
+    icon: "message-circle",
+    href: "/admin/comments",
+  }
 ];
 
 export default Menuitems;

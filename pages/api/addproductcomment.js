@@ -3,12 +3,14 @@
 import Product from "../../models/Product"
 import connectDb from "../../middleware/mongoose"
 
+const shortid = require("shortid");
 const handler = async (req, res) => {
     if (req.method == 'POST') {
+        req.body.rvw._id = shortid.generate();
         let p = await Product.findOneAndUpdate({ _id: req.body.id },
             {
                 $push: {
-                    comments: req.body.comment
+                    comments: req.body.rvw
                 }
             })
         console.log(p)
