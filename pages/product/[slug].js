@@ -88,7 +88,6 @@ export default function Prod({ buyNow, addToCart, product, variants, error }) {
   const productReviews = product.comments.filter((comment) => {
     return comment.approved === true
   })
-  console.log(productReviews)
   const totalRatings = productReviews.reduce(
     (acc, comment) => acc + comment.rating,
     0
@@ -430,6 +429,7 @@ export default function Prod({ buyNow, addToCart, product, variants, error }) {
                   </button>
                 </div>
                 {
+                  productReviews.length > 0 ? 
                   productReviews.map((comment, index) => {
                     if(comment.approved == false) return
                     return (
@@ -451,7 +451,8 @@ export default function Prod({ buyNow, addToCart, product, variants, error }) {
                         </div>
                       </article>
                     )
-                  })
+                  }) :
+                  <p className='text-sm font-medium text-gray-900 mb-2'>No reviews yet!</p>
                 }
               </div>
             </section>

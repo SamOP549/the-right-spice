@@ -7,7 +7,7 @@ const ArticleSchema = new mongoose.Schema({
     text: { type: String, required: true },
     stage: { type: String, required: true },
     coverImg: { type: Array, required: true },
-    comments: { type: Array, required: false }
+    comments: { type: Object, required: false }
 }, { timestamps: true })
 
 mongoose.models = {}

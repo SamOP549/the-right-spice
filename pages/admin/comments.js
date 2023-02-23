@@ -6,11 +6,16 @@ import { Grid } from "@mui/material";
 import AllComments from "../../src/components/dashboard/AllComments";
 import mongoose from 'mongoose';
 import Product from '../../models/Product'
+import Article from '../../models/Article';
 
-const Comments = ({ products }) => {
+const Comments = ({ products, articles }) => {
     let productComments = {}
     products.forEach((product) => {
         productComments[product._id] = product.comments
+    })
+    let articleComments = {}
+    articles.forEach((article) => {
+        articleComments[article._id] = article.comments
     })
     return (
         <ThemeProvider theme={theme}>
@@ -22,7 +27,7 @@ const Comments = ({ products }) => {
             <FullLayout>
                 <Grid container spacing={0}>
                     <Grid item xs={12} lg={12}>
-                        <AllComments productComments={productComments} />
+                        <AllComments productComments={productComments} articleComments={articleComments} />
                     </Grid>
                 </Grid>
             </FullLayout>
@@ -37,5 +42,6 @@ export async function getServerSideProps(context) {
         await mongoose.connect(process.env.MONGO_URI)
     }
     let products = await Product.find()
-    return { props: { products: JSON.parse(JSON.stringify(products)) } }
+    let articles = await Article.find()
+    return { props: { products: JSON.parse(JSON.stringify(products)), articles: JSON.parse(JSON.stringify(articles)) } }
 }
