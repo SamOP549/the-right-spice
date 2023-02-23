@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 import Article from '../../models/Article';
 
 const Blog = ({ articles }) => {
-    const [blogs, setBlogs] = useState(articles)
+    const [page, setPage] = useState(1)
+    const [blogs, setBlogs] = useState(articles?.slice(0, 6))
 
     const formatText = (oldText) => {
         let newText = oldText.slice(0, 100) + "....."
@@ -15,6 +16,11 @@ const Blog = ({ articles }) => {
         let date = new Date(Date.parse(d));
         let dispDate = `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })}, ${date.getFullYear()}`
         return dispDate
+    }
+
+    const showMore = (value) => {
+        setPage(value);
+        setBlogs(articles.slice(0, value * 6))
     }
 
     return (
@@ -55,9 +61,16 @@ const Blog = ({ articles }) => {
 
                         ))}
                     </div>
-                    <div className="flex justify-center">
-                        <button className="px-6 py-3 text-sm rounded-md hover:underline bg-gray-50 text-gray-600">Load more posts...</button>
-                    </div>
+                    {
+                        blogs.length != articles.length ?
+                        (articles?.length > 6 &&
+                        <div className="flex justify-center">
+                            <button onClick={() => showMore(page + 1)} className="px-6 py-3 text-sm rounded-md bg-gray-700 text-white">Load more posts...</button>
+                        </div>) :
+                        <div className="flex justify-center">
+                            <p className="text-gray-900">No more posts</p>
+                        </div>
+                    }
                 </div>
             </section>
         </div>
