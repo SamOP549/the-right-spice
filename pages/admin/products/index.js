@@ -7,8 +7,9 @@ import Link from 'next/link';
 import AllProducts from "../../../src/components/dashboard/AllProducts";
 import mongoose from 'mongoose';
 import Product from '../../../models/Product';
+import Combo from '../../../models/Combo';
 
-const Allproducts = ({ products }) => {
+const Allproducts = ({ products, combos }) => {
     return (
         <ThemeProvider theme={theme}>
             <style jsx global>{`
@@ -19,15 +20,21 @@ const Allproducts = ({ products }) => {
             <FullLayout>
                 <Grid container spacing={0}>
                     <Grid item xs={12} lg={12}>
-                        <div className='flex justify-end px-8'>
-                        <Link href='/admin/products/add'>
-                            <Button variant="outlined"
-                                className='text-white bg-black border-black hover:opacity-60 hover:bg-black hover:border-black'>
-                                Add
-                            </Button>
+                        <div className='flex justify-end px-8 space-x-4'>
+                            <Link href='/admin/products/add-product'>
+                                <Button variant="outlined"
+                                    className='text-white bg-black border-black hover:opacity-60 hover:bg-black hover:border-black'>
+                                    Add Product
+                                </Button>
+                            </Link>
+                            <Link href='/admin/products/add-combo'>
+                                <Button variant="outlined"
+                                    className='text-white bg-black border-black hover:opacity-60 hover:bg-black hover:border-black'>
+                                    Add Combo
+                                </Button>
                             </Link>
                         </div>
-                        <AllProducts products={products} />
+                        <AllProducts products={products} combos={combos} />
                     </Grid>
                 </Grid>
             </FullLayout>
@@ -42,5 +49,6 @@ export async function getServerSideProps(context) {
         await mongoose.connect(process.env.MONGO_URI)
     }
     let products = await Product.find()
-    return { props: { products: JSON.parse(JSON.stringify(products)) } }
+    let combos = await Combo.find()
+    return { props: { products: JSON.parse(JSON.stringify(products)), combos: JSON.parse(JSON.stringify(combos)) } }
 }

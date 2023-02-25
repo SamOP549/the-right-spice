@@ -21,34 +21,58 @@ import BaseCard from "../../../src/components/baseCard/BaseCard";
 import { useRouter } from 'next/router';
 import mongoose from 'mongoose';
 import Product from '../../../models/Product';
+import Combo from '../../../models/Combo';
+import { MultiSelect } from "react-multi-select-component";
 
-const Edit = ({ products }) => {
+const Add = ({ products, combos }) => {
     const router = useRouter()
     const [form, setForm] = useState({})
     const [images, setImages] = React.useState([]);
-    const maxNumber = 3;
-
+    const maxNumber = 4;
+    const [selected, setSelected] = useState([]);
+    const options = products.map((product) => {
+        return { value: product._id, label: product.title + " - " + product.size, qty: 1 }
+    })
     useEffect(() => {
         if (router.query.id) {
-            const product = products.find(prod => prod._id == router.query.id)
-            console.log(product)
+            const combo = combos.find(prod => prod._id == router.query.id)
+            console.log(combo)
             setForm({
-                title: product.title,
-                slug: product.slug,
-                size: product.size,
-                price: product.price,
-                availableQty: product.availableQty,
-                category: product.category,
-                desc: product.desc
+                title: combo.title,
+                slug: combo.slug,
+                price: combo.price,
+                desc: combo.desc
             })
-            setImages(product.img)
+            setImages(combo.img)
+            setSelected(combo.contents)
         }
     }, [router.query.id])
 
+    const changeQty = (e) => {
+        setSelected(selected.map((item) => {
+            if (item.value == e.target.name) {
+                return { ...item, qty: e.target.value }
+            }
+            else {
+                return item
+            }
+        }
+        ))
+    }
+
+
     const handleChange = (e) => {
         e.preventDefault()
-        console.log(form)
-        setForm({ ...form, [e.target.name]: e.target.value, slug: slugify(form.size, { prefix: form.title }) })
+        if (e.target.name == 'title') {
+            setForm({
+                ...form,
+                title: e.target.value,
+                slug: slugify(form.title)
+            })
+        }
+        else {
+            setForm({ ...form, [e.target.name]: e.target.value })
+        }
     }
 
     const onImageChange = (imageList, addUpdateIndex) => {
@@ -59,11 +83,9 @@ const Edit = ({ products }) => {
 
     const handleEdit = async (e) => {
         e.preventDefault()
-        const sendData = { form, images, id: router.query.id };
+        const sendData = { form, images, selected, id: router.query.id };
 
-        console.log(sendData)
-
-        const t = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updateproducts`, {
+        const t = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updatecombos`, {
             method: 'POST', // or 'PUT'
             headers: {
                 'Content-Type': 'application/json',
@@ -84,7 +106,7 @@ const Edit = ({ products }) => {
             <FullLayout>
                 <Grid container spacing={0}>
                     <Grid item xs={12} lg={12}>
-                        <BaseCard title="Add a Product">
+                        <BaseCard title="Add a Combo">
                             <Stack spacing={3}>
                                 <TextField
                                     name="title"
@@ -93,31 +115,28 @@ const Edit = ({ products }) => {
                                     onChange={handleChange}
                                     value={form.title ? form.title : ""}
                                 />
-                                <TextField onChange={handleChange} value={form.title && form.size ? slugify(form.size, { prefix: form.title }) : ""} name="slug" label="Slug" variant="outlined" />
-                                <TextField onChange={handleChange} value={form.size ? form.size : ""} name="size" label="Size" variant="outlined" />
+                                <TextField onChange={handleChange} value={form.title ? slugify(form.title) : ""} name="slug" label="Slug" variant="outlined" />
+                                <h1>Select Contents</h1>
+                                <MultiSelect
+                                    options={options}
+                                    value={selected}
+                                    onChange={setSelected}
+                                    labelledBy="Select"
+                                />
+                                {
+                                    selected?.map((item) => {
+                                        return (
+                                            <div key={item.value} className="flex space-x-4 items-center">
+                                                <h1 className='text-lg'>{item.label}</h1>
+                                                <p>X</p>
+                                                <TextField name={item.value} type="number" label="Quantity" variant='outlined' value={item.qty} onChange={changeQty} />
+                                            </div>
+                                        )
+                                    }
+                                    )
+                                }
                                 <TextField onChange={handleChange} value={form.price ? form.price : ""} name="price" label="Price" variant="outlined" />
-                                <TextField onChange={handleChange} value={form.availableQty ? form.availableQty : ""} name="availableQty" label="Available Quantity" variant="outlined" />
-                                <FormControl>
-                                    <FormLabel id="demo-radio-buttons-group-label" name="category">Category</FormLabel>
-                                    <RadioGroup
-                                        aria-labelledby="demo-radio-buttons-group-label"
-                                        name="category"
-                                        value={form.category ? form.category : ""}
-                                        onChange={handleChange}
-                                    >
-                                        <FormControlLabel
-                                            value="spices"
-                                            control={<Radio />}
-                                            label="Spices"
-                                        />
-                                        <FormControlLabel
-                                            value="combos"
-                                            control={<Radio />}
-                                            label="Combos"
-                                        />
-                                    </RadioGroup>
-                                </FormControl>
-                                <label>Add upto 3 images:</label>
+                                <label>Add upto 4 images:</label>
                                 <ImageUploading
                                     multiple
                                     value={images}
@@ -169,7 +188,7 @@ const Edit = ({ products }) => {
                             </Stack>
                             <br />
                             <Button variant="outlined" mt={2} onClick={handleEdit}>
-                                Save
+                                Submit
                             </Button>
                         </BaseCard>
                     </Grid>
@@ -179,12 +198,13 @@ const Edit = ({ products }) => {
     )
 }
 
-export default Edit
+export default Add
 
 export async function getServerSideProps(context) {
     if (!mongoose.connections[0].readyState) {
         await mongoose.connect(process.env.MONGO_URI)
     }
     let products = await Product.find()
-    return { props: { products: JSON.parse(JSON.stringify(products)) } }
+    let combos = await Combo.find()
+    return { props: { products: JSON.parse(JSON.stringify(products)), combos: (JSON.parse(JSON.stringify(combos))) } }
 }

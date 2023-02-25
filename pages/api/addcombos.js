@@ -1,28 +1,27 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-import Product from "../../models/Product"
+import Combo from '../../models/Combo'
 import connectDb from "../../middleware/mongoose"
 
 const handler = async (req, res) => {
     if (req.method == 'POST') {
-        let p = new Product({
+        let p = new Combo({
             title: req.body.form.title,
             slug: req.body.form.slug,
             desc: req.body.form.desc,
             img: req.body.images,
-            size: req.body.form.size,
             price: req.body.form.price,
-            availableQty: req.body.form.availableQty,
+            contents: req.body.selected,
             comments: [],
         })
         await p.save()
         res.status(200).json({ success: "Success!" })
     }
     else {
-        res.status(400).json({ error: "This mohod is not allowed" })
+        res.status(400).json({ error: "This method is not allowed" })
     }
-    let products = await Product.find()
-    res.status(200).json({ products })
+    let combos = await Combo.find()
+    res.status(200).json({ combos })
 }
 
 export default connectDb(handler);

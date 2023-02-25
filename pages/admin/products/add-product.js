@@ -75,26 +75,6 @@ const Add = () => {
                                 <TextField onChange={handleChange} value={form.size ? form.size : ""} name="size" label="Size" variant="outlined" />
                                 <TextField onChange={handleChange} value={form.price ? form.price : ""} name="price" label="Price" variant="outlined" />
                                 <TextField onChange={handleChange} value={form.availableQty ? form.availableQty : ""} name="availableQty" label="Available Quantity" variant="outlined" />
-                                <FormControl>
-                                    <FormLabel id="demo-radio-buttons-group-label" name="category">Category</FormLabel>
-                                    <RadioGroup
-                                        aria-labelledby="demo-radio-buttons-group-label"
-                                        name="category"
-                                        value={form.category ? form.category : ""}
-                                        onChange={handleChange}
-                                    >
-                                        <FormControlLabel
-                                            value="spices"
-                                            control={<Radio />}
-                                            label="Spices"
-                                        />
-                                        <FormControlLabel
-                                            value="combos"
-                                            control={<Radio />}
-                                            label="Combos"
-                                        />
-                                    </RadioGroup>
-                                </FormControl>
                                 <label>Add upto 4 images:</label>
                                 <ImageUploading
                                     multiple

@@ -1,16 +1,15 @@
 const mongoose = require('mongoose');
 
-const ProductSchema = new mongoose.Schema({
+const CombSchema = new mongoose.Schema({
     title: { type: String, required: true },
     slug: { type: String, required: true, unique: true },
     desc: { type: String, required: true },
     img: { type: Array, required: true },
-    size: { type: String },
     price: { type: Number, required: true },
-    availableQty: { type: Number, required: true },
+    contents: { type: Object, required: true },
     comments: { type: Object, required: false }
 
 }, { timestamps: true })
 
 mongoose.models = {}
-export default mongoose.model("Product", ProductSchema);
+export default mongoose.model("Combo", CombSchema);
