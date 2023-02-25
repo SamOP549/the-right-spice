@@ -88,7 +88,7 @@ export default function Prod({ buyNow, addToCart, combo, products, error }) {
 
     let comboAvailability = true;
     combo.contents.map((spice) => {
-        if(products[spice.value].availableQty < spice.qty) {
+        if (products[spice.value].availableQty < spice.qty) {
             comboAvailability = false;
         }
     })
@@ -337,7 +337,16 @@ export default function Prod({ buyNow, addToCart, combo, products, error }) {
                         </div>
 
                         <div className="mt-10">
-                            <h3 className="text-sm font-medium text-gray-900">Size: {combo.size}</h3>
+                            <h3 className="text-sm font-medium text-gray-900">Contents:</h3>
+                            <div className="mt-4">
+                                <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
+                                    {combo.contents.map((content) => (
+                                        <li key={content.value} className="text-gray-400">
+                                            <span className="text-gray-600">{content.qty} x {content.label}</span>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
                         </div>
 
                         <div className="mt-10">

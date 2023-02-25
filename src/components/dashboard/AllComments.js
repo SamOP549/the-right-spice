@@ -13,33 +13,13 @@ import BaseCard from "../baseCard/BaseCard";
 import { useRouter } from "next/router";
 import Modal from "../../../components/Modal";
 
-const AllComments = ({ productComments, articleComments }) => {
+const AllComments = ({ productComments, articleComments, comboComments }) => {
 
     const router = useRouter()
-    const [showDeleteModal, setShowDeleteModal] = useState(false)
 
     useEffect(() => {
-        console.log(articleComments);
+
     }, [])
-    const openModal = (e) => {
-        e.preventDefault()
-        let count = 0
-        document.querySelectorAll('.products-check').forEach((el) => {
-            if (el.checked) {
-                count += 1;
-            }
-        })
-        if (count > 0) {
-            setShowDeleteModal(true)
-        }
-    }
-
-    const onClose = () => {
-        setShowDeleteModal(false)
-    }
-
-    const del = () => {
-    }
 
     const approveProductComment = async (productid, commentid) => {
 
@@ -53,7 +33,7 @@ const AllComments = ({ productComments, articleComments }) => {
             body: JSON.stringify(data),
         })
         const res = await t.json()
-        console.log(res)
+        router.push('/admin/comments', undefined, { scroll: false })
     }
 
     const removeProductComment = async (productid, commentid) => {
@@ -68,6 +48,37 @@ const AllComments = ({ productComments, articleComments }) => {
             body: JSON.stringify(data),
         })
         const res = await t.json()
+        router.push('/admin/comments', undefined, { scroll: false })
+    }
+
+    const approveComboComment = async (comboid, commentid) => {
+
+        const data = { comboid, commentid, action: "approve" }
+
+        const t = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/approvecombocomment`, {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        const res = await t.json()
+        router.push('/admin/comments', undefined, { scroll: false })
+    }
+
+    const removeComboComment = async (comboid, commentid) => {
+
+        const data = { comboid, commentid, action: "remove" }
+
+        const t = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/approvecombocomment`, {
+            method: 'POST', // or 'PUT'
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+        const res = await t.json()
+        router.push('/admin/comments', undefined, { scroll: false })
     }
 
     const approveBlogComment = async (blogid, commentid) => {
@@ -82,7 +93,7 @@ const AllComments = ({ productComments, articleComments }) => {
             body: JSON.stringify(data),
         })
         const res = await t.json()
-        console.log(res)
+        router.push('/admin/comments', undefined, { scroll: false })
     }
 
     const removeBlogComment = async (blogid, commentid) => {
@@ -97,11 +108,11 @@ const AllComments = ({ productComments, articleComments }) => {
             body: JSON.stringify(data),
         })
         const res = await t.json()
+        router.push('/admin/comments', undefined, { scroll: false })
     }
 
     return (
         <BaseCard title="All Comments">
-            <Modal showDeleteModal={showDeleteModal} onClose={onClose} del={del} />
             <h2 className="font-medium">Product Comments -</h2>
             <Table
                 aria-label="simple table"
@@ -180,6 +191,100 @@ const AllComments = ({ productComments, articleComments }) => {
                                             </TableCell>
                                             <TableCell>
                                                 <button className="bg-red-600 rounded hover:scale-105" onClick={() => removeProductComment(product, comment._id)}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="w-6 h-6">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </button>
+                                            </TableCell>
+                                        </TableRow>
+                                    )
+                                }
+                                )
+                            )
+                        }
+                        )
+                    }
+                </TableBody>
+            </Table>
+            
+            <h2 className="font-medium mt-10">Combo Comments -</h2>
+            <Table
+                aria-label="simple table"
+                sx={{
+                    mt: 3
+                }}
+            >
+                <TableHead>
+                    <TableRow>
+                        <TableCell className="border-r">
+                            <Typography color="textSecondary" variant="h6">
+                                Name
+                            </Typography>
+                        </TableCell>
+                        <TableCell className="border-r">
+                            <Typography color="textSecondary" variant="h6">
+                                Rating
+                            </Typography>
+                        </TableCell>
+                        <TableCell className="border-r">
+                            <Typography color="textSecondary" variant="h6">
+                                Comment
+                            </Typography>
+                        </TableCell>
+                        <TableCell>
+                            <Typography color="textSecondary" variant="h6">
+                                Description
+                            </Typography>
+                        </TableCell>
+                        <TableCell>
+                            <Typography color="textSecondary" variant="h6">
+                                &nbsp;
+                            </Typography>
+                        </TableCell>
+                        <TableCell>
+                            <Typography color="textSecondary" variant="h6">
+                                &nbsp;
+                            </Typography>
+                        </TableCell>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {
+                        Object.keys(comboComments).map((combo) => {
+                            return (
+                                comboComments[combo].map((comment) => {
+                                    if (comment.approved == true) return
+                                    return (
+                                        <TableRow key={comment._id}>
+                                            <TableCell className="border-r">
+                                                <Typography color="textSecondary" variant="h6">
+                                                    {comment.name}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell className="border-r">
+                                                <Typography color="textSecondary" variant="h6">
+                                                    {comment.rating}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell className="border-r">
+                                                <Typography color="textSecondary" variant="h6">
+                                                    {comment.comment}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell className="border-r">
+                                                <Typography color="textSecondary" variant="h6">
+                                                    {comment.description}
+                                                </Typography>
+                                            </TableCell>
+                                            <TableCell>
+                                                <button className="bg-green-600 rounded hover:scale-105" onClick={() => approveComboComment(combo, comment._id)}>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="w-6 h-6">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                                                    </svg>
+                                                </button>
+                                            </TableCell>
+                                            <TableCell>
+                                                <button className="bg-red-600 rounded hover:scale-105" onClick={() => removeComboComment(combo, comment._id)}>
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="white" className="w-6 h-6">
                                                         <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                                                     </svg>

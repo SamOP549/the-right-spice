@@ -7,8 +7,9 @@ import AllComments from "../../src/components/dashboard/AllComments";
 import mongoose from 'mongoose';
 import Product from '../../models/Product'
 import Article from '../../models/Article';
+import Combo from '../../models/Combo';
 
-const Comments = ({ products, articles }) => {
+const Comments = ({ products, articles, combos }) => {
     let productComments = {}
     products.forEach((product) => {
         productComments[product._id] = product.comments
@@ -16,6 +17,10 @@ const Comments = ({ products, articles }) => {
     let articleComments = {}
     articles.forEach((article) => {
         articleComments[article._id] = article.comments
+    })
+    let comboComments = {}
+    combos.forEach((combo) => {
+        comboComments[combo._id] = combo.comments
     })
     return (
         <ThemeProvider theme={theme}>
@@ -27,7 +32,7 @@ const Comments = ({ products, articles }) => {
             <FullLayout>
                 <Grid container spacing={0}>
                     <Grid item xs={12} lg={12}>
-                        <AllComments productComments={productComments} articleComments={articleComments} />
+                        <AllComments productComments={productComments} articleComments={articleComments} comboComments={comboComments} />
                     </Grid>
                 </Grid>
             </FullLayout>
@@ -43,5 +48,6 @@ export async function getServerSideProps(context) {
     }
     let products = await Product.find()
     let articles = await Article.find()
-    return { props: { products: JSON.parse(JSON.stringify(products)), articles: JSON.parse(JSON.stringify(articles)) } }
+    let combos = await Combo.find()
+    return { props: { products: JSON.parse(JSON.stringify(products)), articles: JSON.parse(JSON.stringify(articles)), combos: JSON.parse(JSON.stringify(combos)) } }
 }
