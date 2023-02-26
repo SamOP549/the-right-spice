@@ -27,6 +27,12 @@ const Orders = () => {
     }
   }, [])
 
+  const formatDate = (d) => {
+    let date = new Date(Date.parse(d));
+    let dispDate = `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })}, ${date.getFullYear()}`
+    return dispDate
+  }
+
   return (
     <div className='text-black'>
       <div className="flex flex-col">
@@ -51,7 +57,7 @@ const Orders = () => {
                               </div>
                               <div className="sm:text-sm text-xl font-medium text-gray-500 sm:px-3 md:mr-16 sm:mr-4 px-2 py-4 text-left flex sm:flex-col flex-row justify-between sm:items-start items-center sm:w-auto w-full sm:border-b-0 border-b-2">
                                 <p>Date placed</p>
-                                <p className='text-gray-500'>Jul 6, 2021</p>
+                                <p className='text-gray-500'>{formatDate(order.createdAt)}</p>
                               </div>
                               <div className="sm:text-sm text-xl font-medium text-gray-500 sm:px-3 px-2 py-4 text-left flex sm:flex-col flex-row justify-between sm:items-start items-center sm:w-auto w-full">
                                 <p>Total amount</p>

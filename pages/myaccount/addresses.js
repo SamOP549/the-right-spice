@@ -12,14 +12,14 @@ import Link from 'next/link';
 const Myaccount = () => {
     const router = useRouter()
     const [completeAddress, setcompleteAddresss] = useState({
-        CA_fname: '',
-        CA_lname: '',
-        CA_phone: '',
-        CA_pincode: '',
-        CA_address: '',
-        CA_locality: '',
-        CA_city: '',
-        CA_state: ''
+        fname: '',
+        lname: '',
+        phone: '',
+        pincode: '',
+        address: '',
+        locality: '',
+        city: '',
+        state: ''
     })
     const [addresses, setAddresses] = useState([])
     const [user, setUser] = useState({ value: null })
@@ -55,7 +55,7 @@ const Myaccount = () => {
 
     const handleAddressSave = async (e) => {
         e.preventDefault();
-        if (completeAddress.CA_fname == '' || completeAddress.CA_lname == '' || completeAddress.CA_phone == '' || completeAddress.CA_pincode == '' || completeAddress.CA_address == '' || completeAddress.CA_locality == '') {
+        if (completeAddress.fname == '' || completeAddress.lname == '' || completeAddress.phone == '' || completeAddress.pincode == '' || completeAddress.address == '' || completeAddress.locality == '') {
             setShowAddressModal(false)
             return
         }
@@ -84,14 +84,14 @@ const Myaccount = () => {
     const openModal = (e) => {
         e.preventDefault()
         setcompleteAddresss({
-            CA_fname: '',
-            CA_lname: '',
-            CA_phone: '',
-            CA_pincode: '',
-            CA_address: '',
-            CA_locality: '',
-            CA_city: '',
-            CA_state: ''
+            fname: '',
+            lname: '',
+            phone: '',
+            pincode: '',
+            address: '',
+            locality: '',
+            city: '',
+            state: ''
         })
         setaddressFunction('add')
         setShowAddressModal(true)
@@ -104,7 +104,7 @@ const Myaccount = () => {
     const handleCAChange = async (e) => {
         e.preventDefault()
         const { name, value } = e.target;
-        if (name == 'CA_pincode') {
+        if (name == 'pincode') {
             setcompleteAddresss(prevState => ({
                 ...prevState,
                 [name]: value
@@ -115,16 +115,16 @@ const Myaccount = () => {
                 if (Object.keys(pinJson).includes(value)) {
                     setcompleteAddresss(prevState => ({
                         ...prevState,
-                        CA_city: pinJson[value][0],
-                        CA_state: pinJson[value][1]
+                        city: pinJson[value][0],
+                        state: pinJson[value][1]
                     }));
                 }
             }
             else {
                 setcompleteAddresss(prevState => ({
                     ...prevState,
-                    CA_city: '',
-                    CA_state: ''
+                    city: '',
+                    state: ''
                 }));
             }
         }
@@ -286,7 +286,7 @@ const Myaccount = () => {
                                                         <div className='w-full px-6 py-3 text-sm font-medium text-black transform rounded-md border'>
                                                             <div className='flex-col space-y-3'>
                                                                 <div className='flex justify-between'>
-                                                                    <p className='font-bold'>{address.CA_fname} {address.CA_lname}</p>
+                                                                    <p className='font-bold'>{address.fname} {address.lname}</p>
                                                                     <Menu as="div" className="relative inline-block text-left">
                                                                         <div>
                                                                             <Menu.Button>
@@ -335,8 +335,8 @@ const Myaccount = () => {
                                                                         </Transition>
                                                                     </Menu>
                                                                 </div>
-                                                                <p>Mobile Number: {address.CA_phone}</p>
-                                                                <p>{address.CA_address}, {address.CA_locality}, {address.CA_city}, {address.CA_state} {address.CA_pincode}</p>
+                                                                <p>Mobile Number: {address.phone}</p>
+                                                                <p>{address.address}, {address.locality}, {address.city}, {address.state} {address.pincode}</p>
                                                             </div>
                                                         </div>
                                                     </div>

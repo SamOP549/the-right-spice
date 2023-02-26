@@ -69,7 +69,7 @@ function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
 }
 
-export default function Prod({ buyNow, addToCart, combo, products, error }) {
+export default function Prod({ buyNow, addComboToCart, combo, products, error }) {
 
     const router = useRouter()
     const { slug } = router.query
@@ -317,7 +317,7 @@ export default function Prod({ buyNow, addToCart, combo, products, error }) {
                             </div>
 
                             <button
-                                disabled={combo.availableQty <= 0} onClick={() => { addToCart(slug, quantity, combo.price, combo.title, combo.size, combo.img, "spice", `/combo/${slug}`) }}
+                                disabled={!comboAvailability} type="button" onClick={() => { addComboToCart(slug, quantity, combo.price, combo.title, combo.contents, combo.img, "combo", `/combo/${slug}`) }}
                                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed"
                             >
                                 Add to bag

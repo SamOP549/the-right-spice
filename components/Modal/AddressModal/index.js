@@ -39,9 +39,9 @@ const AddressModal = (props) => {
                                                 <input
                                                     className="rounded-lg shadow-sm border-2 border-gray-200 w-full text-sm p-2.5"
                                                     type="text"
-                                                    id="CA_fname"
-                                                    value={props.completeAddress.CA_fname}
-                                                    name='CA_fname'
+                                                    id="fname"
+                                                    value={props.completeAddress.fname}
+                                                    name='fname'
                                                     onChange={props.handleCAChange}
                                                 />
                                             </div>
@@ -54,9 +54,9 @@ const AddressModal = (props) => {
                                                 <input
                                                     className="rounded-lg shadow-sm border-2 border-gray-200 w-full text-sm p-2.5"
                                                     type="text"
-                                                    id="CA_lname"
-                                                    value={props.completeAddress.CA_lname}
-                                                    name='CA_lname'
+                                                    id="lname"
+                                                    value={props.completeAddress.lname}
+                                                    name='lname'
                                                     onChange={props.handleCAChange}
                                                 />
                                             </div>
@@ -69,9 +69,9 @@ const AddressModal = (props) => {
                                                 <input
                                                     className="rounded-lg shadow-sm border-2 border-gray-200 w-full text-sm p-2.5"
                                                     type="tel"
-                                                    id="CA_phone"
-                                                    value={props.completeAddress.CA_phone}
-                                                    name='CA_phone'
+                                                    id="phone"
+                                                    value={props.completeAddress.phone}
+                                                    name='phone'
                                                     onChange={props.handleCAChange}
                                                 />
                                             </div>
@@ -85,10 +85,10 @@ const AddressModal = (props) => {
                                                     <input
                                                         className="rounded-lg shadow-sm border-2 border-gray-200 w-full text-sm p-2.5"
                                                         type="number"
-                                                        id="CA_pincode"
+                                                        id="pincode"
                                                         placeholder='Pin Code'
-                                                        value={props.completeAddress.CA_pincode}
-                                                        name='CA_pincode'
+                                                        value={props.completeAddress.pincode}
+                                                        name='pincode'
                                                         onChange={props.handleCAChange}
                                                     />
                                                 </div>
@@ -98,10 +98,10 @@ const AddressModal = (props) => {
                                                     <input
                                                         className="rounded-lg shadow-sm border-2 border-gray-200 w-full text-sm p-2.5"
                                                         type="text"
-                                                        id="CA_address"
+                                                        id="address"
                                                         placeholder='Address(House No, Building, Street, Area)'
-                                                        value={props.completeAddress.CA_address}
-                                                        name='CA_address'
+                                                        value={props.completeAddress.address}
+                                                        name='address'
                                                         onChange={props.handleCAChange}
                                                     />
                                                 </div>
@@ -111,10 +111,10 @@ const AddressModal = (props) => {
                                                     <input
                                                         className="rounded-lg shadow-sm border-2 border-gray-200 w-full text-sm p-2.5"
                                                         type="text"
-                                                        id="CA_locality"
+                                                        id="locality"
                                                         placeholder='Locality/Town'
-                                                        value={props.completeAddress.CA_locality}
-                                                        name='CA_locality'
+                                                        value={props.completeAddress.locality}
+                                                        name='locality'
                                                         onChange={props.handleCAChange}
                                                     />
                                                 </div>
@@ -124,11 +124,11 @@ const AddressModal = (props) => {
                                                     <input
                                                         className="rounded-lg shadow-sm border-2 bg-gray-200 border-gray-200 w-full text-sm p-2.5"
                                                         type="text"
-                                                        id="CA_city"
+                                                        id="city"
                                                         placeholder='City/District'
                                                         readOnly
-                                                        value={props.completeAddress.CA_city}
-                                                        name='CA_city'
+                                                        value={props.completeAddress.city}
+                                                        name='city'
                                                         onChange={props.handleCAChange}
                                                     />
                                                 </div>
@@ -137,11 +137,11 @@ const AddressModal = (props) => {
                                                     <input
                                                         className="rounded-lg shadow-sm border-2 bg-gray-200 border-gray-200 w-full text-sm p-2.5"
                                                         type="text"
-                                                        id="CA_state"
+                                                        id="state"
                                                         placeholder='State'
                                                         readOnly
-                                                        value={props.completeAddress.CA_state}
-                                                        name='CA_state'
+                                                        value={props.completeAddress.state}
+                                                        name='state'
                                                         onChange={props.handleCAChange}
                                                     />
                                                 </div>

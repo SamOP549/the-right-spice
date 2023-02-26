@@ -46,15 +46,13 @@ function MyApp({ Component, pageProps }) {
     let keys = Object.keys(myCart)
     for (let i = 0; i < keys.length; i++) {
       subt += myCart[keys[i]].price * myCart[keys[i]].qty
-    }
-    for (let i = 0; i < keys.length; i++) {
       newCount += myCart[keys[i]].qty
     }
     setItemCount(newCount)
     setSubTotal(subt)
   }
 
-  const addToCart = (itemCode, qty, price, name, size, imageSrc, imageAlt, href) => {
+  const addSpiceToCart = (itemCode, qty, price, name, size, imageSrc, imageAlt, href) => {
     toast.success('Item added to cart!😘', {
       position: "bottom-center",
       autoClose: 2000,
@@ -78,6 +76,30 @@ function MyApp({ Component, pageProps }) {
     saveCart(newCart)
   }
 
+  const addComboToCart = (itemCode, qty, price, name, contents, imageSrc, imageAlt, href) => {
+    toast.success('Item added to cart!😘', {
+      position: "bottom-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+    });
+    let newCart = JSON.parse(JSON.stringify(cart));
+    if (itemCode in cart) {
+      newCart[itemCode].qty = cart[itemCode].qty + qty
+      itemCount += qty
+    }
+    else {
+      newCart[itemCode] = { itemCode, qty: qty, price, name, contents, imageSrc, imageAlt, href }
+      itemCount += qty;
+    }
+    setItemCount(itemCount)
+    setCart(newCart)
+    saveCart(newCart)
+  }
+
   const buyNow = (itemCode, qty, price, name, size, imageSrc, imageAlt, href) => {
     let newCart = {}
     newCart[itemCode] = { itemCode, qty, price, name, size, imageSrc, imageAlt, href }
@@ -93,7 +115,7 @@ function MyApp({ Component, pageProps }) {
     router.push('/')
   }
 
-  const removeFromCart = (itemCode, qty, price, name, size, imageSrc, imageAlt, href) => {
+  const removeFromCart = (itemCode, qty) => {
     toast.info('Item removed from cart!😢', {
       position: "bottom-center",
       autoClose: 2000,
@@ -151,8 +173,8 @@ function MyApp({ Component, pageProps }) {
         draggable
         pauseOnHover
       />
-      <Navbar logout={logout} user={user} key={key} cart={cart} itemCount={itemCount} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
-      <Component user={user} buyNow={buyNow} cart={cart} itemCount={itemCount} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
+      <Navbar logout={logout} user={user} key={key} cart={cart} itemCount={itemCount} addSpiceToCart={addSpiceToCart} addComboToCart={addComboToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} />
+      <Component user={user} buyNow={buyNow} cart={cart} itemCount={itemCount} addSpiceToCart={addSpiceToCart} addComboToCart={addComboToCart} removeFromCart={removeFromCart} clearCart={clearCart} subTotal={subTotal} {...pageProps} />
       <Footer />
     </div>
   )

@@ -102,7 +102,7 @@ const AllBlogs = ({ articles }) => {
                             <Typography color="textSecondary" variant="h6">
                                 <input
                                     onClick={selectAll}
-                                    className="form-check-input check-all appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" id="inlineCheckbox1" />
+                                    className="form-check-input check-all h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" id="inlineCheckbox1" />
                             </Typography>
                         </TableCell>
                         <TableCell className="border-r">
@@ -147,7 +147,7 @@ const AllBlogs = ({ articles }) => {
                                         fontWeight: "500",
                                     }}
                                 >
-                                    <input className="form-check-input blogs-check appearance-none h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" id="inlineCheckbox1" value={article._id} />
+                                    <input className="form-check-input blogs-check h-4 w-4 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer" type="checkbox" id="inlineCheckbox1" value={article._id} />
                                 </Typography>
                             </TableCell>
                             <TableCell>

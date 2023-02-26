@@ -40,9 +40,12 @@ const MyOrder = ({ order, clearCart }) => {
                     <div className="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
                       <div className="w-full flex flex-col justify-start items-start space-y-8">
                         <h3 className="text-xl xl:text-2xl font-semibold leading-6 text-gray-800">{order.products[product].name}</h3>
-                        <div className="flex justify-start items-start flex-col space-y-1">
-                          <p className="text-sm leading-none text-gray-800"><span className="text-gray-300">Size: </span> {order.products[product].size}</p>
-                        </div>
+                        {
+                          order.products[product].size &&
+                          <div className="flex justify-start items-start flex-col space-y-1">
+                            <p className="text-sm leading-none text-gray-800"><span className="text-gray-300">Size: </span> {order.products[product].size}</p>
+                          </div>
+                        }
                       </div>
                       <div className="flex justify-between space-x-8 items-start w-full">
                         <p className="text-base xl:text-lg leading-6">₹{order.products[product].price}</p>

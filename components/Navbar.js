@@ -7,7 +7,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { useRouter } from 'next/router'
 
-const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subTotal, itemCount }) => {
+const Navbar = ({ logout, user, cart, addSpiceToCart, addComboToCart, removeFromCart, clearCart, subTotal, itemCount }) => {
     const [open, setOpen] = useState(false)
     const [sidebar, setSidebar] = useState(false)
     const router = useRouter()
@@ -135,13 +135,19 @@ const Navbar = ({ logout, user, cart, addToCart, removeFromCart, clearCart, subT
                                                                                             <p className="mt-1 text-sm text-gray-500">{cart[k].size}</p>
                                                                                         </div>
                                                                                         <div className="flex flex-1 items-end justify-between text-sm">
-                                                                                            <div className='flex pt-3'>
+                                                                                            <div className='flex pt-3 items-center'>
                                                                                                 <p className="text-gray-500 mr-2">Qty</p>
-                                                                                                <svg xmlns="http://www.w3.org/2000/svg" onClick={() => { removeFromCart(k, 1, cart[k].price, cart[k].name, cart[k].size, cart[k].imageSrc, cart[k].imageAlt, cart[k].href) }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer hover:fill-black hover:text-white focus:scale-125">
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg" onClick={() => { removeFromCart(k, 1) }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer hover:fill-black hover:text-white focus:scale-125">
                                                                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                                                                 </svg>
-                                                                                                <p className="text-gray-500 px-1">{cart[k].qty}</p>
-                                                                                                <svg xmlns="http://www.w3.org/2000/svg" onClick={() => { addToCart(k, 1, cart[k].price, cart[k].name, cart[k].size, cart[k].imageSrc, cart[k].imageAlt, cart[k].href) }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer hover:fill-black hover:text-white focus:scale-125">
+                                                                                                <input
+                                                                                                    type="number"
+                                                                                                    id="quantity"
+                                                                                                    value={cart[k].qty}
+                                                                                                    readOnly
+                                                                                                    className="w-6 rounded border-gray-200 py-1 text-center text-base [-moz-appearance:_textfield] [&::-webkit-outer-spin-button]:m-0 [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-inner-spin-button]:appearance-none"
+                                                                                                />
+                                                                                                <svg xmlns="http://www.w3.org/2000/svg" onClick={() => { cart[k].imageAlt == "spice" ? addSpiceToCart(k, 1, cart[k].price, cart[k].name, cart[k].size, cart[k].imageSrc, cart[k].imageAlt, cart[k].href) : addComboToCart(k, 1, cart[k].price, cart[k].name, cart[k].contents, cart[k].imageSrc, cart[k].imageAlt, cart[k].href) }} fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 cursor-pointer hover:fill-black hover:text-white focus:scale-125">
                                                                                                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                                                                                                 </svg>
                                                                                             </div>

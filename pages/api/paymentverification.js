@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import Order from '../../models/Order';
 import Product from '../../models/Product';
 import connectDb from '../../middleware/mongoose';
+import Combo from '../../models/Combo';
 
 const handler = async (req, res) => {
     if (req.method === "POST") {
@@ -19,8 +20,15 @@ const handler = async (req, res) => {
             let order = await Order.findOneAndUpdate({ orderId: razorpay_order_id }, { status: "Paid", paymentInfo: req.body })
             let products = order.products
             for (let slug in products) {
-                await Product.findOneAndUpdate({ slug: slug }, { $inc: { "availableQty": - products[slug].qty } })
-
+                if (products[slug].imageAlt == "spice") {
+                    await Product.findOneAndUpdate({ slug: slug }, { $inc: { "availableQty": - products[slug].qty } })
+                }
+                else if (products[slug].imageAlt == "combo") {
+                    let combo = await Combo.findOne({ slug: slug })
+                    for (let i = 0; i < combo.contents.length; i++) {
+                        await Product.findOneAndUpdate({ _id: combo.contents[i].value }, { $inc: { "availableQty": - combo.contents[i].qty * products[slug].qty } })
+                    }
+                }
             }
 
             res.redirect(`/order?id=${order._id}&clearCart=1`)
