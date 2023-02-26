@@ -2,10 +2,13 @@ import React from 'react'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Pagination from '@mui/material/Pagination';
 
 const Orders = () => {
   const router = useRouter()
   const [orders, setOrders] = useState([])
+  const [showOrders, setshowOrders] = useState([])
+  const [page, setPage] = useState(1)
   useEffect(() => {
     const fetchOrders = async () => {
       const t = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/myorders`, {
@@ -17,7 +20,7 @@ const Orders = () => {
       })
       const res = await t.json()
       setOrders(res.orders)
-      console.log(res.orders)
+      setshowOrders(res.orders?.slice(0, 5))
     }
     if (!localStorage.getItem('myuser')) {
       router.push('/')
@@ -33,6 +36,11 @@ const Orders = () => {
     return dispDate
   }
 
+  const handlePageChange = (event, value) => {
+    setPage(value);
+    setshowOrders(orders.slice(value * 5 - 5, value * 5))
+  };
+
   return (
     <div className='text-black'>
       <div className="flex flex-col">
@@ -44,7 +52,7 @@ const Orders = () => {
                 <h1 className='text-3xl font-semibold text-left'>Order History</h1>
               </div>
               {
-                orders.map(order => {
+                showOrders.map(order => {
                   return (
                     <div key={order._id} className='mb-20'>
                       <div className="max-w-full bg-gray-100">
@@ -132,6 +140,7 @@ const Orders = () => {
               }
 
             </div>
+            <Pagination className="flex justify-around mb-10" count={Math.ceil(orders?.length / 5)} page={page} onChange={handlePageChange} />
           </div>
         </div>
       </div>
