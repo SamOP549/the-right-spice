@@ -41,6 +41,7 @@ const Add = ({ products, combos }) => {
                 title: combo.title,
                 slug: combo.slug,
                 price: combo.price,
+                discount: combo.discount,
                 desc: combo.desc
             })
             setImages(combo.img)
@@ -136,6 +137,7 @@ const Add = ({ products, combos }) => {
                                     )
                                 }
                                 <TextField onChange={handleChange} value={form.price ? form.price : ""} name="price" label="Price" variant="outlined" />
+                                <TextField onChange={handleChange} value={form.discount ? form.discount : ""} name="discount" label="Discount (%)" variant="outlined" />
                                 <label>Add upto 4 images:</label>
                                 <ImageUploading
                                     multiple

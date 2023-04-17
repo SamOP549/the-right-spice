@@ -109,6 +109,10 @@ export default function Prod({ buyNow, addComboToCart, combo, products, error })
         }
     }, [router.query])
 
+    const discountedPrice = (price, discount) => {
+        return price - (price * discount) / 100;
+    }
+
     const handleReview = (e) => {
         e.preventDefault()
         const { name, value } = e.target
@@ -243,7 +247,14 @@ export default function Prod({ buyNow, addComboToCart, combo, products, error })
                     {/* Options */}
                     <div className="mt-4 lg:row-span-3 lg:mt-0">
                         <h2 className="sr-only">Combo information</h2>
-                        <p className="text-3xl tracking-tight text-gray-900">{comboAvailability ? "₹" + combo.price : "Out of Stock!"}</p>
+                        <div className='flex items-center space-x-3'>
+                            {
+                                combo.discount ?
+                                    <p className="text-3xl tracking-tight text-red-700">₹{discountedPrice(combo.price, combo.discount).toFixed(2)}</p>
+                                    : null
+                            }
+                            <p className={`text-3xl tracking-tight text-gray-900 ${combo.discount ? "line-through decoration-red-700" : ""}`}>{comboAvailability ? "₹" + combo.price.toFixed(2) : "Out of Stock!"}</p>
+                        </div>
 
                         {/* Reviews */}
                         <div className="mt-6">
@@ -317,7 +328,7 @@ export default function Prod({ buyNow, addComboToCart, combo, products, error })
                             </div>
 
                             <button
-                                disabled={!comboAvailability} type="button" onClick={() => { addComboToCart(slug, quantity, combo.price, combo.title, combo.contents, combo.img, "combo", `/combo/${slug}`) }}
+                                disabled={!comboAvailability} type="button" onClick={() => { addComboToCart(slug, quantity, combo.discount > 0 ? discountedPrice(combo.price, combo.discount) : combo.price, combo.title, combo.contents, combo.img, "combo", `/combo/${slug}`) }}
                                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed"
                             >
                                 Add to bag

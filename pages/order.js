@@ -43,14 +43,14 @@ const MyOrder = ({ order, clearCart }) => {
                         {
                           order.products[product].size &&
                           <div className="flex justify-start items-start flex-col space-y-1">
-                            <p className="text-sm leading-none text-gray-800"><span className="text-gray-300">Size: </span> {order.products[product].size}</p>
+                            <p className="text-sm leading-none text-gray-800"><span className="">Size: </span> {order.products[product].size}</p>
                           </div>
                         }
                       </div>
                       <div className="flex justify-between space-x-8 items-start w-full">
                         <p className="text-base xl:text-lg leading-6">₹{order.products[product].price}</p>
                         <p className="text-base xl:text-lg leading-6 text-gray-800">x{order.products[product].qty}</p>
-                        <p className="text-base xl:text-lg font-semibold leading-6 text-gray-800">₹{order.products[product].price * order.products[product].qty}</p>
+                        <p className="text-base xl:text-lg font-semibold leading-6 text-gray-800">₹{(order.products[product].price * order.products[product].qty).toFixed(2)}</p>
                       </div>
                     </div>
                   </div>
@@ -65,16 +65,16 @@ const MyOrder = ({ order, clearCart }) => {
               <div className="flex justify-center items-center w-full space-y-4 flex-col border-gray-200 border-b pb-4">
                 <div className="flex justify-between w-full">
                   <p className="text-base leading-4 text-gray-800">Subtotal</p>
-                  <p className="text-base leading-4 text-gray-600">₹{order.amount}</p>
+                  <p className="text-base leading-4 text-gray-600">₹{order.amount.toFixed(2)}</p>
                 </div>
                 <div className="flex justify-between items-center w-full">
                   <p className="text-base leading-4 text-gray-800">Shipping</p>
-                  <p className="text-base leading-4 text-gray-600">₹{order.shippingcharges}</p>
+                  <p className="text-base leading-4 text-gray-600">₹{order.shippingcharges.toFixed(2)}</p>
                 </div>
               </div>
               <div className="flex justify-between items-center w-full">
                 <p className="text-base font-semibold leading-4 text-gray-800">Total</p>
-                <p className="text-base font-semibold leading-4 text-gray-600">₹{order.amount + order.shippingcharges}</p>
+                <p className="text-base font-semibold leading-4 text-gray-600">₹{(order.amount + order.shippingcharges).toFixed(2)}</p>
               </div>
             </div>
             <div className="flex flex-col justify-center px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 space-y-6">

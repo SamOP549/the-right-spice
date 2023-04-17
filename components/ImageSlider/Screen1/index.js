@@ -1,7 +1,7 @@
 import { Carousel } from '@mantine/carousel';
 import Link from 'next/link';
 
-export default function Demo({ items }) {
+export default function Demo({ items, category }) {
     return (
         <Carousel
             slideSize="33.333333%"
@@ -18,9 +18,9 @@ export default function Demo({ items }) {
             {
                 Object.keys(items).map((item) => {
                     return (
-                        <Link passHref={true} href={`/product/${items[item].slug}`} key={items[item]._id}>
+                        <Link passHref={true} href={`/${category}/${items[item].slug}`} key={items[item]._id}>
                             <Carousel.Slide>
-                                <div className='py-8 px-4 rounded'>
+                                <div className='py-8 px-4 rounded-lg cursor-pointer hover:shadow-lg border'>
                                     <img
                                         alt={items[item].title}
                                         src={items[item].img[0]["data_url"]}
@@ -30,7 +30,7 @@ export default function Demo({ items }) {
                                     <h3 className="mt-4 font-medium">{items[item].title}</h3>
 
                                     <p className="mt-2 text-sm text-gray-700">
-                                        ₹{items[item].price}
+                                        ₹{items[item].price.toFixed(2)}
                                     </p>
                                 </div>
                             </Carousel.Slide>

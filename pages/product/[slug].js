@@ -101,6 +101,10 @@ export default function Prod({ buyNow, addSpiceToCart, product, variants, error 
     }
   }, [router.query])
 
+  const discountedPrice = (price, discount) => {
+    return price - (price * discount) / 100;
+  }
+
   const handleReview = (e) => {
     e.preventDefault()
     const { name, value } = e.target
@@ -240,7 +244,14 @@ export default function Prod({ buyNow, addSpiceToCart, product, variants, error 
           {/* Options */}
           <div className="mt-4 lg:row-span-3 lg:mt-0">
             <h2 className="sr-only">Product information</h2>
-            <p className="text-3xl tracking-tight text-gray-900">{product.availableQty <= 0 ? "Out of Stock!" : "₹" + product.price}</p>
+            <div className='flex items-center space-x-3'>
+              {
+                product.discount ?
+                  <p className="text-3xl tracking-tight text-red-700">₹{discountedPrice(product.price, product.discount).toFixed(2)}</p>
+                  : null
+              }
+              <p className={`text-3xl tracking-tight text-gray-900  ${product.discount ? "line-through decoration-red-700" : ""}`}>{product.availableQty <= 0 ? "Out of Stock!" : "₹" + product.price.toFixed(2)}</p>
+            </div>
 
             {/* Reviews */}
             <div className="mt-6">
@@ -372,7 +383,7 @@ export default function Prod({ buyNow, addSpiceToCart, product, variants, error 
               </div>
 
               <button
-                disabled={product.availableQty <= 0} type="button" onClick={() => { addSpiceToCart(slug, quantity, product.price, product.title, product.size, product.img, "spice", `/product/${slug}`) }}
+                disabled={product.availableQty <= 0} type="button" onClick={() => { addSpiceToCart(slug, quantity, product.discount > 0 ? discountedPrice(product.price, product.discount) : product.price, product.title, product.size, product.img, "spice", `/product/${slug}`) }}
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed"
               >
                 Add to bag

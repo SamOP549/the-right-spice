@@ -5,6 +5,7 @@ const CombSchema = new mongoose.Schema({
     slug: { type: String, required: true, unique: true },
     desc: { type: String, required: true },
     img: { type: Array, required: true },
+    discount: { type: Number, required: false, default: 0 },
     price: { type: Number, required: true },
     contents: { type: Object, required: true },
     comments: { type: Object, required: false }

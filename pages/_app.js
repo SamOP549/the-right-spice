@@ -49,7 +49,7 @@ function MyApp({ Component, pageProps }) {
       newCount += myCart[keys[i]].qty
     }
     setItemCount(newCount)
-    setSubTotal(subt)
+    setSubTotal(subt.toFixed(2))
   }
 
   const addSpiceToCart = (itemCode, qty, price, name, size, imageSrc, imageAlt, href) => {
@@ -68,7 +68,7 @@ function MyApp({ Component, pageProps }) {
       itemCount += qty
     }
     else {
-      newCart[itemCode] = { itemCode, qty: qty, price, name, size, imageSrc, imageAlt, href }
+      newCart[itemCode] = { itemCode, qty: qty, price: price.toFixed(2), name, size, imageSrc, imageAlt, href }
       itemCount += qty;
     }
     setItemCount(itemCount)
@@ -92,7 +92,7 @@ function MyApp({ Component, pageProps }) {
       itemCount += qty
     }
     else {
-      newCart[itemCode] = { itemCode, qty: qty, price, name, contents, imageSrc, imageAlt, href }
+      newCart[itemCode] = { itemCode, qty: qty, price: price.toFixed(2), name, contents, imageSrc, imageAlt, href }
       itemCount += qty;
     }
     setItemCount(itemCount)
@@ -102,7 +102,7 @@ function MyApp({ Component, pageProps }) {
 
   const buyNow = (itemCode, qty, price, name, size, imageSrc, imageAlt, href) => {
     let newCart = {}
-    newCart[itemCode] = { itemCode, qty, price, name, size, imageSrc, imageAlt, href }
+    newCart[itemCode] = { itemCode, qty, price: price.toFixed(2), name, size, imageSrc, imageAlt, href }
     setCart(newCart)
     saveCart(newCart)
     router.push('/checkout')

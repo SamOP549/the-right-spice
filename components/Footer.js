@@ -6,7 +6,7 @@ import Link from 'next/link'
 const Footer = () => {
   return (
     <div>
-      <footer className="footer p-10 bg-red-800 text-black relative items-center">
+      <footer className="footer px-10 py-20 bg-red-900 text-black relative items-start">
         <div>
           <div>
             <Image src={logo} alt='logo' height={109 * 1} width={150 * 1} />
@@ -58,32 +58,35 @@ const Footer = () => {
         </div>
         <div>
           <span className="footer-title">Links</span>
-          <Link href='/spices'><a className="link link-hover">Spices</a></Link>
-          <Link href='/combos'><a className="link link-hover">Combos</a></Link>
-          <Link href='/blogs'><a className="link link-hover">Blogs</a></Link>
-          <Link href='/contact'><a className="link link-hover">Contact</a></Link>
+          <Link href='/spices'><p className='cursor-pointer'>Spices</p></Link>
+          <Link href='/combos'><p className='cursor-pointer'>Combos</p></Link>
+          <Link href='/blogs'><p className='cursor-pointer'>Blogs</p></Link>
+          <Link href='/contact'><p className='cursor-pointer'>Contact</p></Link>
         </div>
         <div>
-          <span className="footer-title">Services</span>
-          <a className="link link-hover">Branding</a>
-          <a className="link link-hover">Design</a>
-          <a className="link link-hover">Marketing</a>
-          <a className="link link-hover">Advertisement</a>
+          <span className="footer-title">Contact</span>
+          <p>Branding</p>
+          <p>Design</p>
+          <p>Marketing</p>
+          <p>Advertisement</p>
         </div>
         <div>
           <span className="footer-title">Company</span>
-          <a className="link link-hover">About us</a>
-          <a className="link link-hover">Contact</a>
-          <a className="link link-hover">Jobs</a>
-          <a className="link link-hover">Press kit</a>
+          <Link href='/about'><p className='cursor-pointer'>About us</p></Link>
+          <Link href='/contact'><p className='cursor-pointer'>Contact</p></Link>
+          <Link href=''><p className='cursor-pointer'>FAQ&apos;s</p></Link>
         </div>
         <div>
           <span className="footer-title">Legal</span>
-          <a className="link link-hover">Terms of use</a>
-          <a className="link link-hover">Privacy policy</a>
-          <a className="link link-hover">Cookie policy</a>
+          <Link href='/privacy-policy'><p className='cursor-pointer'>Privacy policy</p></Link>
+          <Link href='/quality-policy'><p className='cursor-pointer'>Quality policy</p></Link>
+          <Link href='/return-policy'><p className='cursor-pointer'>Return policy</p></Link>
         </div>
       </footer>
+      <div className='footer px-10 py-4 bg-red-900 flex items-center justify-between'>
+        <p>© Great Value Foods LLP 2020. All Rights Reserved.</p>
+        <p>We accept visa master</p>
+      </div>
     </div>
   )
 }

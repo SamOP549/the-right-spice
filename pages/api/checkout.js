@@ -52,7 +52,7 @@ const handler = async (req, res) => {
                         res.status(400).json({ "error": "Some items in your cart went out of stock!", "cartClear": true });
                     }
 
-                    if (product.price != cart[item].price) {
+                    if ((product.price - (product.price * product.discount) / 100) != cart[item].price) {
                         res.status(400).json({ "error": "Some items in your cart have changed. Please try again!", "cartClear": true });
                         return
                     }
@@ -65,14 +65,14 @@ const handler = async (req, res) => {
                             res.status(400).json({ "error": "Some items in your cart went out of stock!", "cartClear": true });
                         }
                     }
-                    if (combo.price != cart[item].price) {
+                    if ((combo.price - (combo.price * combo.discount) / 100) != cart[item].price) {
                         res.status(400).json({ "error": "Some items in your cart have changed. Please try again!", "cartClear": true });
                         return
                     }
                 }
             }
-            if (sumTotal !== req.body.subTotal) {
-                res.status(400).json({ "error": true, "cartClear": true });
+            if (sumTotal != req.body.subTotal) {
+                res.status(400).json({ "error": true, "cartClear": true, real: sumTotal, cart: req.body.subTotal });
                 return
             }
 

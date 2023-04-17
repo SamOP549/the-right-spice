@@ -251,7 +251,7 @@ const AllProducts = ({ products, combos }) => {
                     fontWeight: "500",
                   }}
                 >
-                  {product.price}
+                  {product.price.toFixed(2)}
                 </Typography>
               </TableCell>
               <TableCell>
@@ -368,7 +368,7 @@ const AllProducts = ({ products, combos }) => {
                     fontWeight: "500",
                   }}
                 >
-                  {combo.price}
+                  {combo.price.toFixed(2)}
                 </Typography>
               </TableCell>
             </TableRow>

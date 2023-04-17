@@ -4,9 +4,12 @@ import Combo from '../models/Combo'
 import mongoose from "mongoose";
 
 const Combos = ({ combos }) => {
+  const discountedPrice = (price, discount) => {
+    return price - (price * discount) / 100;
+  }
   return (
     <section>
-      <div className="max-w-screen-xl px-6 py-8 mx-auto">
+      <div className="px-6 py-8 mx-auto">
         <div>
           <span className="inline-block w-12 h-1 bg-red-700"></span>
 
@@ -30,12 +33,19 @@ const Combos = ({ combos }) => {
                       className="object-cover w-full rounded aspect-square"
                     />
 
-                    <h5 className="mt-4 text-sm text-black/90">
+                    <h5 className="mt-4 text-xl text-black/90">
                       {combos[item].title}
                     </h5>
 
                     <div className="flex items-center justify-between mt-4 font-bold text-black">
-                      <p className="text-lg">₹{combos[item].price}</p>
+                      <div className='flex space-x-2 items-center'>
+                        {
+                          combos[item].discount ?
+                            <p className="text-xl text-red-700">₹{discountedPrice(combos[item].price, combos[item].discount).toFixed(2)}</p>
+                            : null
+                        }
+                        <p className={`text-xl ${combos[item].discount ? "line-through decoration-red-700" : ""}`}>₹{combos[item].price.toFixed(2)}</p>
+                      </div>
                     </div>
                   </a>
                 </Link>

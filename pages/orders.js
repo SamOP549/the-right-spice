@@ -69,7 +69,7 @@ const Orders = () => {
                               </div>
                               <div className="sm:text-sm text-xl font-medium text-gray-500 sm:px-3 px-2 py-4 text-left flex sm:flex-col flex-row justify-between sm:items-start items-center sm:w-auto w-full">
                                 <p>Total amount</p>
-                                <p>₹{order.amount}</p>
+                                <p>₹{order.amount.toFixed(2)}</p>
                               </div>
                             </div>
                             <div className='flex sm:mx-2 py-2 -sm:w-full justify-end sm:px-0 px-2 space-x-3'>

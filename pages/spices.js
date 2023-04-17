@@ -3,10 +3,12 @@ import Link from 'next/link'
 import Product from '../models/Product'
 import mongoose from "mongoose";
 const Spices = ({ products, addToCart }) => {
-  console.log(products)
+  const discountedPrice = (price, discount) => {
+    return price - (price * discount) / 100;
+  }
   return (
     <section>
-      <div className="max-w-screen-xl px-6 py-8 mx-auto">
+      <div className="px-6 py-8 mx-auto">
         <div>
           <span className="inline-block w-12 h-1 bg-red-700"></span>
 
@@ -32,14 +34,21 @@ const Spices = ({ products, addToCart }) => {
                       />
                     </Link>
                   </div>
-                  <h5 className="mt-4 text-sm text-black/90">
+                  <h5 className="mt-4 text-xl text-black/90">
                     {products[item].title}
                   </h5>
 
                   <div className="flex items-center justify-between mt-4 font-bold text-black">
-                    <p className="text-lg">₹{products[item].price}</p>
+                    <div className='flex space-x-2 items-center'>
+                      {
+                        products[item].discount ?
+                          <p className="text-xl text-red-700">₹{discountedPrice(products[item].price, products[item].discount).toFixed(2)}</p>
+                          : null
+                      }
+                      <p className={`text-xl ${products[item].discount ? "line-through decoration-red-700" : ""}`}>₹{products[item].price.toFixed(2)}</p>
+                    </div>
 
-                    <div className="text-xs tracking-wide">
+                    <div className="text-sm tracking-wide">
                       <p>{products[item].size.length} SIZES</p>
                     </div>
                   </div>

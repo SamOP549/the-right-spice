@@ -124,6 +124,7 @@ const Add = ({ products }) => {
                                     )
                                 }
                                 <TextField onChange={handleChange} value={form.price ? form.price : ""} name="price" label="Price" variant="outlined" />
+                                <TextField onChange={handleChange} value={form.discount ? form.discount : ""} name="discount" label="Discount (%)" variant="outlined" />
                                 <label>Add upto 4 images:</label>
                                 <ImageUploading
                                     multiple

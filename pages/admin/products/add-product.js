@@ -74,6 +74,7 @@ const Add = () => {
                                 <TextField onChange={handleChange} value={form.title && form.size ? slugify(form.size, { prefix: form.title }) : ""} name="slug" label="Slug" variant="outlined" />
                                 <TextField onChange={handleChange} value={form.size ? form.size : ""} name="size" label="Size" variant="outlined" />
                                 <TextField onChange={handleChange} value={form.price ? form.price : ""} name="price" label="Price" variant="outlined" />
+                                <TextField onChange={handleChange} value={form.discount ? form.discount : ""} name="discount" label="Discount (%)" variant="outlined" />
                                 <TextField onChange={handleChange} value={form.availableQty ? form.availableQty : ""} name="availableQty" label="Available Quantity" variant="outlined" />
                                 <label>Add upto 4 images:</label>
                                 <ImageUploading

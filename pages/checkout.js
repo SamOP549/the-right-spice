@@ -105,6 +105,7 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
     console.log(data)
     if (data.error) {
       if (data.cartClear) {
+        console.log(data)
         clearCart()
       }
       toast.error(data.error, {
