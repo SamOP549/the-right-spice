@@ -72,7 +72,7 @@ const handler = async (req, res) => {
                 }
             }
             if (sumTotal != req.body.subTotal) {
-                res.status(400).json({ "error": true, "cartClear": true, real: sumTotal, cart: req.body.subTotal });
+                res.status(400).json({ "error": true, "cartClear": true });
                 return
             }
 

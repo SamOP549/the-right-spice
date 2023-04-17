@@ -102,10 +102,8 @@ const Checkout = ({ cart, addToCart, removeFromCart, clearCart, subTotal, itemCo
       body: JSON.stringify(sendData),
     })
     const data = await t.json()
-    console.log(data)
     if (data.error) {
       if (data.cartClear) {
-        console.log(data)
         clearCart()
       }
       toast.error(data.error, {
