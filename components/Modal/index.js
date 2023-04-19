@@ -2,6 +2,8 @@ import AddressModal from './AddressModal/index'
 import PasswordModal from './PasswordModal/index'
 import DeleteModal from './DeleteModal/index'
 import ReviewModal from './ReviewModal/index.'
+import SearchModal from './Search Modal'
+
 
 export default function Example(props) {
   if (props.showAddressModal == true) {
@@ -23,6 +25,11 @@ export default function Example(props) {
   else if (props.showReviewModal == true) {
     return (
       <ReviewModal {...props} />
+    )
+  }
+  else if (props.showSearchModal == true) {
+    return (
+      <SearchModal {...props} />
     )
   }
 }
