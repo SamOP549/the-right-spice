@@ -24,35 +24,35 @@ const Spices = ({ products, addToCart }) => {
           {
             Object.keys(products).map((item) => {
               return (
-                <a href="#" className="block shadow-2xl rounded-lg p-3" key={products[item]._id}>
-                  <div className='relative'>
-                    <Link passHref={true} href={`/product/${products[item].slug}`} key={products[item]._id}>
+                <Link passHref={true} href={`/product/${products[item].slug}`} key={products[item]._id}>
+                  <div className="block shadow-lg rounded-lg p-3 cursor-pointer hover:shadow-xl">
+                    <div className='relative'>
                       <img
                         alt="Simple Watch"
                         src={products[item].img[0]["data_url"]}
                         className="object-cover w-full rounded aspect-square"
                       />
-                    </Link>
-                  </div>
-                  <h5 className="mt-4 text-xl text-black/90">
-                    {products[item].title}
-                  </h5>
-
-                  <div className="flex items-center justify-between mt-4 font-bold text-black">
-                    <div className='flex space-x-2 items-center'>
-                      {
-                        products[item].discount ?
-                          <p className="text-xl text-red-700">₹{discountedPrice(products[item].price, products[item].discount).toFixed(2)}</p>
-                          : null
-                      }
-                      <p className={`text-xl ${products[item].discount ? "line-through decoration-red-700" : ""}`}>₹{products[item].price.toFixed(2)}</p>
                     </div>
+                    <h5 className="mt-4 text-xl text-black/90">
+                      {products[item].title}
+                    </h5>
 
-                    <div className="text-sm tracking-wide">
-                      <p>{products[item].size.length} SIZES</p>
+                    <div className="flex items-center justify-between mt-4 font-bold text-black">
+                      <div className='flex space-x-2 items-center'>
+                        {
+                          products[item].discount ?
+                            <p className="text-xl text-red-700">₹{discountedPrice(products[item].price, products[item].discount).toFixed(2)}</p>
+                            : null
+                        }
+                        <p className={`text-xl ${products[item].discount ? "line-through decoration-red-700" : ""}`}>₹{products[item].price.toFixed(2)}</p>
+                      </div>
+
+                      <div className="text-sm tracking-wide">
+                        <p>{products[item].size.length} SIZES</p>
+                      </div>
                     </div>
                   </div>
-                </a>
+                </Link>
               )
             })
           }

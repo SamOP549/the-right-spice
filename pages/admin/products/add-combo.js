@@ -71,6 +71,7 @@ const Add = ({ products }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        form.slug = slugify(form.title)
         const sendData = { form, images , selected };
 
         const t = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addcombos`, {

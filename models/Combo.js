@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const CombSchema = new mongoose.Schema({
     title: { type: String, required: true },
+    type: { type: String, default: "combo" },
     slug: { type: String, required: true, unique: true },
     desc: { type: String, required: true },
     img: { type: Array, required: true },

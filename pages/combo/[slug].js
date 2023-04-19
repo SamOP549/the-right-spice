@@ -249,11 +249,11 @@ export default function Prod({ buyNow, addComboToCart, combo, products, error })
                         <h2 className="sr-only">Combo information</h2>
                         <div className='flex items-center space-x-3'>
                             {
-                                combo.discount ?
+                                comboAvailability && combo.discount ?
                                     <p className="text-3xl tracking-tight text-red-700">₹{discountedPrice(combo.price, combo.discount).toFixed(2)}</p>
                                     : null
                             }
-                            <p className={`text-3xl tracking-tight text-gray-900 ${combo.discount ? "line-through decoration-red-700" : ""}`}>{comboAvailability ? "₹" + combo.price.toFixed(2) : "Out of Stock!"}</p>
+                            <p className={`text-3xl tracking-tight text-gray-900 ${comboAvailability && combo.discount ? "line-through decoration-red-700" : ""}`}>{comboAvailability ? "₹" + combo.price.toFixed(2) : "Out of Stock!"}</p>
                         </div>
 
                         {/* Reviews */}

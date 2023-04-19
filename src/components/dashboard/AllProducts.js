@@ -194,6 +194,11 @@ const AllProducts = ({ products, combos }) => {
                 Price
               </Typography>
             </TableCell>
+            <TableCell className="border-r">
+              <Typography color="textSecondary" variant="h6">
+                Discount(%)
+              </Typography>
+            </TableCell>
             <TableCell align="right">
               <Typography color="textSecondary" variant="h6">
                 Available Qty
@@ -252,6 +257,16 @@ const AllProducts = ({ products, combos }) => {
                   }}
                 >
                   {product.price.toFixed(2)}
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography
+                  sx={{
+                    fontSize: "15px",
+                    fontWeight: "500",
+                  }}
+                >
+                  {product.discount}
                 </Typography>
               </TableCell>
               <TableCell>
@@ -320,9 +335,14 @@ const AllProducts = ({ products, combos }) => {
                 Image
               </Typography>
             </TableCell>
-            <TableCell align="right">
+            <TableCell className="border-r">
               <Typography color="textSecondary" variant="h6">
                 Price
+              </Typography>
+            </TableCell>
+            <TableCell align="right">
+              <Typography color="textSecondary" variant="h6">
+                Discount(%)
               </Typography>
             </TableCell>
           </TableRow>
@@ -369,6 +389,17 @@ const AllProducts = ({ products, combos }) => {
                   }}
                 >
                   {combo.price.toFixed(2)}
+                </Typography>
+              </TableCell>
+              <TableCell>
+                <Typography
+                  align="right"
+                  sx={{
+                    fontSize: "15px",
+                    fontWeight: "500",
+                  }}
+                >
+                  {combo.discount}
                 </Typography>
               </TableCell>
             </TableRow>

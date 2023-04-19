@@ -39,6 +39,7 @@ const Add = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        form.slug = slugify(form.size, { prefix: form.title })
         const sendData = { form, images };
 
         const t = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/addproducts`, {

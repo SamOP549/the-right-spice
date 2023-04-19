@@ -246,11 +246,11 @@ export default function Prod({ buyNow, addSpiceToCart, product, variants, error 
             <h2 className="sr-only">Product information</h2>
             <div className='flex items-center space-x-3'>
               {
-                product.discount ?
+                product.availableQty > 0 && product.discount ?
                   <p className="text-3xl tracking-tight text-red-700">₹{discountedPrice(product.price, product.discount).toFixed(2)}</p>
                   : null
               }
-              <p className={`text-3xl tracking-tight text-gray-900  ${product.discount ? "line-through decoration-red-700" : ""}`}>{product.availableQty <= 0 ? "Out of Stock!" : "₹" + product.price.toFixed(2)}</p>
+              <p className={`text-3xl tracking-tight text-gray-900  ${product.availableQty > 0 && product.discount ? "line-through decoration-red-700" : ""}`}>{product.availableQty <= 0 ? "Out of Stock!" : "₹" + product.price.toFixed(2)}</p>
             </div>
 
             {/* Reviews */}

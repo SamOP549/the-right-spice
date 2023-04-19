@@ -22,7 +22,7 @@ export default function Home({ promotions, spices, combos }) {
         <div className="mx-auto px-4 py-12 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:items-stretch">
             <div className="group relative block">
-              <div className="relative h-[350px] sm:h-[600px]">
+              <div className="relative h-[350px] md:h-full">
                 <img
                   src="./newrange/new-spices-2.jpg"
                   alt="Spices Spoons"
@@ -66,7 +66,7 @@ export default function Home({ promotions, spices, combos }) {
             className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 lg:items-stretch"
           >
             <div className="group relative block">
-              <div className="relative h-[350px] sm:h-[600px]">
+              <div className="relative h-[350px] md:h-full">
                 <img
                   src="./newrange/new-combos-2.jpg"
                   alt="Spices bowls"

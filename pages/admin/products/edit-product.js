@@ -47,7 +47,6 @@ const Edit = ({ products }) => {
 
     const handleChange = (e) => {
         e.preventDefault()
-        console.log(form)
         setForm({ ...form, [e.target.name]: e.target.value, slug: slugify(form.size, { prefix: form.title }) })
     }
 
@@ -59,6 +58,7 @@ const Edit = ({ products }) => {
 
     const handleEdit = async (e) => {
         e.preventDefault()
+        form.slug = slugify(form.size, { prefix: form.title })
         const sendData = { form, images, id: router.query.id };
 
         console.log(sendData)

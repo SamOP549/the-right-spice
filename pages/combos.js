@@ -26,7 +26,7 @@ const Combos = ({ combos }) => {
             Object.keys(combos).map((item) => {
               return (
                 <Link passHref={true} href={`/combo/${combos[item].slug}`} key={combos[item]._id}>
-                  <a href="#" className="block shadow-2xl rounded-lg p-3">
+                  <div className="block shadow-lg rounded-lg p-3 cursor-pointer hover:shadow-xl">
                     <img
                       alt="Simple Watch"
                       src={combos[item].img[0]["data_url"]}
@@ -47,7 +47,7 @@ const Combos = ({ combos }) => {
                         <p className={`text-xl ${combos[item].discount ? "line-through decoration-red-700" : ""}`}>₹{combos[item].price.toFixed(2)}</p>
                       </div>
                     </div>
-                  </a>
+                  </div>
                 </Link>
               )
             })

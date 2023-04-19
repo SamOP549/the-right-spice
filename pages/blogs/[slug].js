@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import Article from '../../models/Article'
 import mongoose from 'mongoose'
-import { Link } from '@mui/material'
+import Link from 'next/link'
 import Modal from '../../components/Modal'
 import { Rating } from '@mantine/core'
 import { ToastContainer, toast } from 'react-toastify';
@@ -142,9 +142,9 @@ const Blog = ({ article, articles }) => {
         <div className='mt-4 flex-col'>
           <ul>
             {recents.map((recent, index) => (
-              <li key={index}>
+              <li className='p-2' key={index}>
                 <Link href={`/blogs/${recent.slug}`}>
-                  <p className='no-underline'>{recent.title}</p>
+                  <h6 className='cursor-pointer text-red-900 hover:text-gray-700'>{recent.title}</h6>
                 </Link>
               </li>
             ))}

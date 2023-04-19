@@ -20,16 +20,16 @@ export default function Demo({ items, category }) {
                     return (
                         <Link passHref={true} href={`/${category}/${items[item].slug}`} key={items[item]._id}>
                             <Carousel.Slide>
-                                <div className='py-8 px-4 rounded-lg cursor-pointer hover:shadow-lg border'>
+                                <div className='p-3 rounded-lg shadow-lg cursor-pointer hover:shadow-xl border'>
                                     <img
                                         alt={items[item].title}
                                         src={items[item].img[0]["data_url"]}
-                                        className="h-96 w-full object-cover"
+                                        className="w-full object-cover rounded aspect-square"
                                     />
 
-                                    <h3 className="mt-4 font-medium">{items[item].title}</h3>
+                                    <h3 className="mt-4 text-xl text-black/90">{items[item].title}</h3>
 
-                                    <p className="mt-2 text-sm text-gray-700">
+                                    <p className="mt-2 font-bold text-xl text-gray-700">
                                         ₹{items[item].price.toFixed(2)}
                                     </p>
                                 </div>

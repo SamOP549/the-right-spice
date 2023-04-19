@@ -7,37 +7,43 @@ body {
     color: black;
 }
 
-.ql-size-huge{
+.ql-size-huge {
     font-size: xx-large;
 }
 
-.ql-size-small{
+.ql-size-small {
     font-size: small;
 }
 
-.ql-size-large{
+.ql-size-large {
     font-size: x-large;
 }
 
-a{
+a {
     color: #007bff;
     text-decoration: none;
 }
 
-ul{
+ul {
     list-style-type: disc;
     margin-inline: 2rem;
 }
 
-ol{
+ol {
     list-style-type: decimal;
     margin-inline: 2rem;
 }
 
-h1,h2,h3,h4,h5,h6,p{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
     text-decoration: none;
-}   
+}
 
-.mantine-Carousel-control{
+.mantine-Carousel-control {
     background-color: white;
 }

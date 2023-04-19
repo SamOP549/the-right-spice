@@ -84,8 +84,9 @@ const Add = ({ products, combos }) => {
 
     const handleEdit = async (e) => {
         e.preventDefault()
+        form.slug = slugify(form.title)
         const sendData = { form, images, selected, id: router.query.id };
-
+        console.log(sendData)
         const t = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/updatecombos`, {
             method: 'POST', // or 'PUT'
             headers: {

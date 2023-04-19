@@ -21,8 +21,8 @@ const handler = async (req, res) => {
     else {
         res.status(400).json({ error: "This method is not allowed" })
     }
-    let products = await Product.find()
-    res.status(200).json({ products })
+    let combos = await Combo.find()
+    res.status(200).json({ combos })
 }
 
 export default connectDb(handler);
